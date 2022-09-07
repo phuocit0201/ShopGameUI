@@ -1,53 +1,77 @@
 .header {
     background-color: rgba(0, 0, 0, 0.8) !important;
     color: #fff;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    transition: all 0.1s linear;
 }
 
-.header .container {
+.header .header-content {
     padding: 30px 15px;
+    transition: all 0.1s linear;
 }
 
-.header .container .logo {
+.header .header-content .logo {
     width: 238px;
     height: 67px;
 }
 
-.header .container .logo img {
+.header .header-content .logo img {
     width: 100%;
     height: 100%;
 }
 
-.header .container .nav-menu {
+.header .header-content .nav-menu {
     width: 505px;
     height: 67px;
 }
-.header .container .nav-menu .nav-menu__content {
+.header .header-content .nav-menu .nav-menu__content {
     width: 100%;
     height: 100%;
 }
 
-.header .container .nav-menu .nav-menu__content li {
+.header .header-content .nav-menu .nav-menu__content li {
     height: 100%;
     display: flex;
     align-items: center;
 }
 
-.header .container .nav-menu .nav-menu__content .left {
+.header .header-content .nav-menu .nav-menu__content .left {
     font-size: 15px;
     font-weight: 600;
 }
 
-.header .container .nav-menu .nav-menu__content .left:hover {
+.header .header-content .nav-menu .nav-menu__content .left:hover {
     color: #32c5d2;
 }
 
-.header .container .nav-menu .nav-menu__content .right {
+.header .header-content .nav-menu .nav-menu__content .right {
     font-weight: 400;
     border: 1px solid #2f353b;
     border-radius: 20px;
     padding: 5px 20px;
 }
 
-.header .container .nav-menu .nav-menu__content .right:hover {
+.header .header-content .nav-menu .nav-menu__content .right:hover {
     background: #2f353b;
+}
+
+.bonus {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 134px;
+    height: 134px;
+}
+
+.bonus img {
+    width: 100%;
+    height: 100%;
+}
+.wrapper-content {
+    margin-top: 127px;
+}
+.stick {
+    background-color: rgba(0, 0, 0, 0.5) !important;
 }

@@ -1,6 +1,6 @@
 function Home() {
     return (
-        <div className="container" style={{ background: 'green' }}>
+        <div className="wrapper-content container" style={{ background: 'green', height: 500, opacity: 0.4 }}>
             Home
         </div>
     );

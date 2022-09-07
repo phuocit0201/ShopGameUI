@@ -3,10 +3,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '~/asset/fontawesome-free-5.15.3/css/all.min.css';
 import { Link } from 'react-router-dom';
 import logo from '~/asset/client/images/logo/logo.png';
+import sale from '~/asset/client/images/home/sale.gif';
+import $ from 'jquery';
 function Header() {
+    const handleScroll = () => {
+        if (window.scrollY > 10) {
+            $('.header').addClass('stick');
+        } else {
+            $('.header').removeClass('stick');
+        }
+    };
+
+    window.addEventListener('scroll', handleScroll);
     return (
         <header className="header container-fluid">
-            <div className="container d-flex justify-content-between">
+            <div className="header-content container d-flex justify-content-between">
                 <div className="logo">
                     <img src={logo} alt="" />
                 </div>
@@ -36,6 +47,9 @@ function Header() {
                     </ul>
                 </nav>
             </div>
+            <Link className="bonus" to="/">
+                <img src={sale} alt="" />
+            </Link>
         </header>
     );
 }
