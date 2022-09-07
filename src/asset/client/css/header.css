@@ -23,7 +23,7 @@
 }
 
 .header .header-content .nav-menu {
-    width: 505px;
+    width: 550px;
     height: 67px;
 }
 .header .header-content .nav-menu .nav-menu__content {
@@ -70,8 +70,9 @@
     height: 100%;
 }
 .wrapper-content {
-    margin-top: 127px;
+    margin-top: 137px;
 }
+
 .stick {
     background-color: rgba(0, 0, 0, 0.5) !important;
 }

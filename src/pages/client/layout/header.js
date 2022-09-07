@@ -9,8 +9,10 @@ function Header() {
     const handleScroll = () => {
         if (window.scrollY > 10) {
             $('.header').addClass('stick');
+            $('.header-content').css('padding', '15px 30px');
         } else {
             $('.header').removeClass('stick');
+            $('.header-content').css('padding', '30px 15px');
         }
     };
 

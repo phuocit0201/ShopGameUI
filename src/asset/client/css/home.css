@@ -1,0 +1,84 @@
+.content__banner--container {
+    padding: 20px 0px;
+}
+
+.content .content__banner {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+}
+
+.content .content__banner .content__banner--left h3 {
+    padding: 5px;
+    text-align: center;
+    font-weight: 700;
+    color: #ff502e;
+    background: #1d1d1d;
+}
+
+.content .content__banner .banner__right--img img {
+    width: 100%;
+}
+
+.content .content__banner .banner__left--top {
+    padding: unset;
+    position: relative;
+}
+
+.content .content__banner .banner__left--top li {
+    margin-bottom: 35px;
+}
+
+.content .content__banner .banner__left--top li i {
+    display: inline-block;
+    background: #0ce3ac;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.content .content__banner .banner__left--top span {
+    margin-left: 5px;
+}
+
+.content .content__banner .banner__left--top label {
+    position: absolute;
+    right: 0;
+    background: #ff502e;
+    padding: 2px 20px;
+    border-radius: 5px;
+    color: #000000;
+    font-weight: bold;
+}
+/*---------------------------------------------------danh mục vòng quay---------------------------*/
+.content .category-lucky__container {
+    padding: 20px 0px;
+}
+
+.content .category-lucky__content {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    height: 300px;
+}
+
+.category-lucky__content--title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.category-lucky__content--title h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.category-lucky__content--title span {
+    width: 200px;
+    height: 5px;
+    background-color: #32c5d2 !important;
+    border-radius: 2px;
+}
+
+.category-lucky__content--box img {
+    width: 100%;
+}
