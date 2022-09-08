@@ -1,5 +1,6 @@
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '~/asset/client/css/footer.css';
+
 function Footer() {
     return (
         <footer className="footer container-fluid">
@@ -20,15 +21,15 @@ function Footer() {
                         <h3>LIÊN HỆ</h3>
                         <ul>
                             <li>
-                                <i class="fas fa-phone-volume"></i>
+                                <i className="fas fa-phone-volume"></i>
                                 <span>0845151117</span>
                             </li>
                             <li>
-                                <i class="fas fa-envelope"></i>
+                                <i className="fas fa-envelope"></i>
                                 <span>huuphuocit0201@gmail.com</span>
                             </li>
                             <li>
-                                <i class="fas fa-clock"></i>
+                                <i className="fas fa-clock"></i>
                                 <span>8h-11h & 13h-22h</span>
                             </li>
                         </ul>

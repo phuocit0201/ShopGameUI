@@ -23,7 +23,7 @@ function Header() {
                 <div className="logo">
                     <img src={logo} alt="" />
                 </div>
-                <nav className="nav-menu">
+                <nav className="nav-menu d-none d-lg-block d-xl-block">
                     <ul className="nav-menu__content d-flex justify-content-between">
                         <li>
                             <Link className="left" to="/">
@@ -37,19 +37,22 @@ function Header() {
                         </li>
                         <li>
                             <Link className="right" to="/login">
-                                <i class="far fa-user"></i> Đăng Nhập
+                                <i className="far fa-user"></i> Đăng Nhập
                             </Link>
                         </li>
                         <li>
-                            <Link className="right" to="/">
-                                <i class="fas fa-plus"></i>
-                                <i class="far fa-user"></i> Đăng Kí
+                            <Link className="right" to="/register">
+                                <i className="fas fa-plus"></i>
+                                <i className="far fa-user"></i> Đăng Kí
                             </Link>
                         </li>
                     </ul>
                 </nav>
+                <div className="nav-mobile  d-flex align-items-center">
+                    <i className="fas fa-bars"></i>
+                </div>
             </div>
-            <Link className="bonus" to="/">
+            <Link className="bonus d-none d-lg-block d-xl-block d-md-block" to="/">
                 <img src={sale} alt="" />
             </Link>
         </header>

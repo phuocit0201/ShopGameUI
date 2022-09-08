@@ -1,0 +1,74 @@
+.form__container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.form__container--content {
+    width: 400px;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+.container__content--img {
+    display: flex;
+    justify-content: center;
+    padding: 30px 0px;
+}
+
+.container__content--box {
+    padding: 10px 30px;
+}
+
+.container__content--box h3 {
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+    padding-bottom: 10px;
+}
+
+.content__box--input {
+    padding-bottom: 15px;
+}
+
+.content__box--input label {
+    color: #00ffff;
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.content__box--input input {
+    width: 100%;
+    color: #00ffff;
+    background: none;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #999;
+    transition: 0.2s all linear;
+}
+
+.content__box--input input:focus {
+    border-bottom: 2px solid #00ffff;
+}
+
+.content__box--btn {
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+
+.content__box--btn button {
+    margin: 0 20px;
+    padding: 10px 20px;
+    font-weight: 600;
+    background: transparent;
+    color: #fff;
+    border-radius: 5px;
+    transition: all 0.25s linear;
+    box-shadow: 0 0 5px #fff, 0 0 25px #f23b5c, 0 0 20px #f23b5c;
+}
+
+.content__box--btn button:hover {
+    background: #01a1a1;
+}
