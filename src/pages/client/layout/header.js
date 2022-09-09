@@ -5,26 +5,58 @@ import { Link } from 'react-router-dom';
 import logo from '~/asset/client/images/logo/logo.png';
 import sale from '~/asset/client/images/home/sale.gif';
 import $ from 'jquery';
+import { useEffect } from 'react';
 function Header() {
     const handleScroll = () => {
-        if (window.scrollY > 10) {
+        if (window.scrollY > 10 && $(window).width() > 991) {
             $('.header').addClass('stick');
             $('.header-content').css('padding', '15px 30px');
-        } else {
+        } else if (window.scrollY < 10 && $(window).width() > 991) {
             $('.header').removeClass('stick');
             $('.header-content').css('padding', '30px 15px');
         }
     };
 
+    const handelResize = () => {
+        if ($(window).width() <= 991) {
+            $('.header-content').css('padding', '10px 15px');
+            $('.nav-menu__content li').click(() => {
+                $('.nav-menu').hide();
+            });
+        } else {
+            handleScroll();
+        }
+    };
+    useEffect(() => {
+        if ($(window).width() <= 991) {
+            $('.nav-menu__content li').click(() => {
+                $('.nav-menu').hide();
+            });
+        }
+    }, []);
+
+    const handleTogle = () => {
+        $('.nav-menu').slideToggle();
+    };
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handelResize);
+
     return (
         <header className="header container-fluid">
-            <div className="header-content container d-flex justify-content-between">
-                <div className="logo">
-                    <img src={logo} alt="" />
+            <div className="header-content container">
+                <div className="header-moible">
+                    <div className="logo">
+                        <img src={logo} alt="" />
+                    </div>
+                    <div className="nav__mobile--container d-lg-none d-xl-none">
+                        <div className="nav__mobile--content">
+                            <i onClick={handleTogle} id="toggle" className="fas fa-bars"></i>
+                        </div>
+                    </div>
                 </div>
-                <nav className="nav-menu d-none d-lg-block d-xl-block">
-                    <ul className="nav-menu__content d-flex justify-content-between">
+
+                <nav className="nav-menu">
+                    <ul className="nav-menu__content">
                         <li>
                             <Link className="left" to="/">
                                 Trang Chủ
@@ -48,9 +80,6 @@ function Header() {
                         </li>
                     </ul>
                 </nav>
-                <div className="nav-mobile  d-flex align-items-center">
-                    <i className="fas fa-bars"></i>
-                </div>
             </div>
             <Link className="bonus d-none d-lg-block d-xl-block d-md-block" to="/">
                 <img src={sale} alt="" />

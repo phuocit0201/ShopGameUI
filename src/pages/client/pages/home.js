@@ -1,5 +1,5 @@
 import '~/asset/client/css/home.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import team from '~/asset/client/images/home/team.gif';
 import lucky from '~/asset/client/images/lucky/lucky.png';
 import categoryGame from '~/asset/client/images/nick/category-game.png';
@@ -8,56 +8,105 @@ import btnBuy from '~/asset/client/images/nick/btn-buy.png';
 import Notification from '~/components/notification';
 import { useEffect } from 'react';
 import $ from 'jquery';
+import API from '~/services/rest-client';
 function Home() {
+    let navigate = useNavigate();
+    const luckyList = [
+        {
+            title: 'GIẢI KHÁT MÙA HÈ',
+            number: '500',
+            price: '50.000',
+            priceSale: '20.000',
+        },
+        {
+            title: 'GIẢI KHÁT MÙA HÈ',
+            number: '500',
+            price: '30.000',
+            priceSale: '20.000',
+        },
+        {
+            title: 'GIẢI KHÁT MÙA HÈ',
+            number: '500',
+            price: '30.000',
+            priceSale: '20.000',
+        },
+        {
+            title: 'GIẢI KHÁT MÙA HÈ',
+            number: '500',
+            price: '30.000',
+            priceSale: '20.000',
+        },
+        {
+            title: 'GIẢI KHÁT MÙA HÈ',
+            number: '500',
+            price: '30.000',
+            priceSale: '20.000',
+        },
+    ];
+    const auth = async () => {
+        let access_token = localStorage.getItem('access_token');
+        await API.post('api/v1/users/get-me', { token: access_token })
+            .then((response) => {
+                if (!response.data.id) {
+                    navigate('/login');
+                }
+            })
+            .catch(() => {
+                navigate('/login');
+            });
+    };
     useEffect(() => {
+        auth();
         setTimeout(() => {
             $('.notification').css({ opacity: 1, 'pointer-events': 'unset' });
             $('#notification').css({ transform: 'unset', transition: 'all 0.25s linear' });
-        }, 200);
+        }, 100);
     }, []);
     return (
         <div className="content container">
             <div className="content__banner--container">
-                <div className="content__banner row">
+                <div className="content__banner row flex-column-reverse">
                     <div className="content__banner--left col-lg-4">
-                        <h3>TOP NẠP THẺ THÁNG 9</h3>
-                        <ul className="banner__left--top">
-                            <li>
-                                <i>1</i>
-                                <span>phuoc***</span>
-                                <label htmlFor="">
-                                    9.550.000<sup>đ</sup>
-                                </label>
-                            </li>
-                            <li>
-                                <i>2</i>
-                                <span>phuoc***</span>
-                                <label htmlFor="">
-                                    9.550.000<sup>đ</sup>
-                                </label>
-                            </li>
-                            <li>
-                                <i>3</i>
-                                <span>phuoc***</span>
-                                <label htmlFor="">
-                                    9.550.000<sup>đ</sup>
-                                </label>
-                            </li>
-                            <li>
-                                <i>4</i>
-                                <span>phuoc***</span>
-                                <label htmlFor="">
-                                    9.550.000<sup>đ</sup>
-                                </label>
-                            </li>
-                            <li>
-                                <i>5</i>
-                                <span>phuoc***</span>
-                                <label htmlFor="">
-                                    9.550.000<sup>đ</sup>
-                                </label>
-                            </li>
-                        </ul>
+                        <div className="content__banner--left-box">
+                            <h3>TOP NẠP THẺ THÁNG 9</h3>
+                            <ul className="banner__left--top">
+                                <li>
+                                    <i>1</i>
+                                    <span>phuoc***</span>
+                                    <label htmlFor="">
+                                        9.550.000<sup>đ</sup>
+                                    </label>
+                                </li>
+                                <li>
+                                    <i>2</i>
+                                    <span>phuoc***</span>
+                                    <label htmlFor="">
+                                        9.550.000<sup>đ</sup>
+                                    </label>
+                                </li>
+                                <li>
+                                    <i>3</i>
+                                    <span>phuoc***</span>
+                                    <label htmlFor="">
+                                        9.550.000<sup>đ</sup>
+                                    </label>
+                                </li>
+                                <li>
+                                    <i>4</i>
+                                    <span>phuoc***</span>
+                                    <label htmlFor="">
+                                        9.550.000<sup>đ</sup>
+                                    </label>
+                                </li>
+                                <li>
+                                    <i>5</i>
+                                    <span>phuoc***</span>
+                                    <label htmlFor="">
+                                        9.550.000<sup>đ</sup>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div className="content__banner--right col-lg-8">
                         <div className="banner__right--img">
@@ -72,86 +121,28 @@ function Home() {
                         <h2 className="text-center">DANH MỤC VÒNG QUAY</h2>
                         <span></span>
                     </div>
-                    <div className="category-lucky__content--box col-lg-3">
-                        <div className="content__box--container">
-                            <img src={lucky} alt="" />
-                            <div className="content__box--info">
-                                <h4>
-                                    <Link to="/">GIẢI KHÁT MÙA HÈ</Link>
-                                </h4>
-                                <p>Đã quay: 10.999</p>
-                                <div className="content__box--info-price">
-                                    <span className="text-decoration-line-through">30.000đ</span>
-                                    <span>20.000đ</span>
-                                </div>
-                                <div className="content__box--info-btn">
-                                    <Link to="/">
-                                        <img src={btn} alt="" />
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="category-lucky__content--box col-lg-3">
-                        <div className="content__box--container">
-                            <img src={lucky} alt="" />
-                            <div className="content__box--info">
-                                <h4>
-                                    <Link to="/">GIẢI KHÁT MÙA HÈ</Link>
-                                </h4>
-                                <p>Đã quay: 10.999</p>
-                                <div className="content__box--info-price">
-                                    <span className="text-decoration-line-through">30.000đ</span>
-                                    <span>20.000đ</span>
-                                </div>
-                                <div className="content__box--info-btn">
-                                    <Link to="/">
-                                        <img src={btn} alt="" />
-                                    </Link>
+                    {luckyList.map((item, index) => (
+                        <div key={index} className="category-lucky__content--box col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div className="content__box--container">
+                                <img src={lucky} alt="" />
+                                <div className="content__box--info">
+                                    <h4>
+                                        <Link to="/">{item.title}</Link>
+                                    </h4>
+                                    <p>Đã quay: {item.number}</p>
+                                    <div className="content__box--info-price">
+                                        <span className="text-decoration-line-through">{item.price}đ</span>
+                                        <span>{item.priceSale}đ</span>
+                                    </div>
+                                    <div className="content__box--info-btn">
+                                        <Link to="/">
+                                            <img src={btn} alt="" />
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="category-lucky__content--box col-lg-3">
-                        <div className="content__box--container">
-                            <img src={lucky} alt="" />
-                            <div className="content__box--info">
-                                <h4>
-                                    <Link to="/">GIẢI KHÁT MÙA HÈ</Link>
-                                </h4>
-                                <p>Đã quay: 10.999</p>
-                                <div className="content__box--info-price">
-                                    <span className="text-decoration-line-through">30.000đ</span>
-                                    <span>20.000đ</span>
-                                </div>
-                                <div className="content__box--info-btn">
-                                    <Link to="/">
-                                        <img src={btn} alt="" />
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="category-lucky__content--box col-lg-3">
-                        <div className="content__box--container">
-                            <img src={lucky} alt="" />
-                            <div className="content__box--info">
-                                <h4>
-                                    <Link to="/">GIẢI KHÁT MÙA HÈ</Link>
-                                </h4>
-                                <p>Đã quay: 10.999</p>
-                                <div className="content__box--info-price">
-                                    <span className="text-decoration-line-through">30.000đ</span>
-                                    <span>20.000đ</span>
-                                </div>
-                                <div className="content__box--info-btn">
-                                    <Link to="/">
-                                        <img src={btn} alt="" />
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
             <div className="category__container">

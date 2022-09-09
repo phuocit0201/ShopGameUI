@@ -3,9 +3,9 @@ import Home from '~/pages/client/pages/home';
 import Login from '~/pages/client/pages/login';
 import Register from '~/pages/client/pages/register';
 const publicRoutes = [
-    { path: '/', component: Home, layout: Layout },
-    { path: '/login', component: Login, layout: Layout },
-    { path: '/register', component: Register, layout: Layout },
+    { path: '/', component: Home, layout: Layout, role: 1 },
+    { path: '/login', component: Login, layout: Layout, role: 1 },
+    { path: '/register', component: Register, layout: Layout, role: 0 },
 ];
 const privateRoutes = [];
 

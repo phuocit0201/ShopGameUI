@@ -50,7 +50,7 @@
 }
 
 .content__box--input input:focus {
-    border-bottom: 2px solid #00ffff;
+    border-bottom: 2px solid #006eff;
 }
 
 .content__box--btn {
