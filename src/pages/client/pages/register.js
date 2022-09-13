@@ -1,9 +1,13 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Form from '~/components/form';
 import $ from 'jquery';
 function Register() {
+    let navigate = useNavigate();
     useEffect(() => {
+        if (localStorage.getItem('access_token') !== null) {
+            navigate('/');
+        }
         $('html, body').animate({ scrollTop: 0 }, 0);
     }, []);
     return (

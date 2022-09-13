@@ -56,7 +56,7 @@
 }
 
 .stick {
-    background-color: rgba(0, 0, 0, 0.5) !important;
+    background-color: rgba(0, 0, 0, 0.9) !important;
 }
 
 /*-----------------------------------------REPONSIVE----------------------------------*/
@@ -144,5 +144,9 @@
         height: 100%;
         display: flex;
         align-items: center;
+    }
+    .logout {
+        background: transparent;
+        color: #fff;
     }
 }

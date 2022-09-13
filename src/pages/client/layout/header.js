@@ -5,8 +5,15 @@ import { Link } from 'react-router-dom';
 import logo from '~/asset/client/images/logo/logo.png';
 import sale from '~/asset/client/images/home/sale.gif';
 import $ from 'jquery';
-import { useEffect } from 'react';
+import { useEffect, useContext, useLayoutEffect } from 'react';
+import { DataContext } from '~/contexts/DataContext';
+import { Logout } from '~/services/users';
+import { LoadingData } from '~/components/loading';
 function Header() {
+    const dataContext = useContext(DataContext).data;
+    const handleReload = useContext(DataContext).handleReload;
+    const setDataContext = useContext(DataContext).setData;
+    const [loading, isLogout, handleLogout] = Logout();
     const handleScroll = () => {
         if (window.scrollY > 10 && $(window).width() > 991) {
             $('.header').addClass('stick');
@@ -16,7 +23,11 @@ function Header() {
             $('.header-content').css('padding', '30px 15px');
         }
     };
-
+    useLayoutEffect(() => {
+        if (isLogout === true) {
+            setDataContext(null);
+        }
+    }, [isLogout]);
     const handelResize = () => {
         if ($(window).width() <= 991) {
             $('.header-content').css('padding', '10px 15px');
@@ -27,6 +38,7 @@ function Header() {
             handleScroll();
         }
     };
+
     useEffect(() => {
         if ($(window).width() <= 991) {
             $('.nav-menu__content li').click(() => {
@@ -43,6 +55,7 @@ function Header() {
 
     return (
         <header className="header container-fluid">
+            {loading && <LoadingData title="Đang Đăng Xuất" />}
             <div className="header-content container">
                 <div className="header-moible">
                     <div className="logo">
@@ -58,25 +71,32 @@ function Header() {
                 <nav className="nav-menu">
                     <ul className="nav-menu__content">
                         <li>
-                            <Link className="left" to="/">
+                            <Link onClick={handleReload} className="left" to="/">
                                 Trang Chủ
                             </Link>
                         </li>
                         <li>
-                            <Link className="left" to="/">
+                            <Link onClick={handleReload} className="left" to="">
                                 Nạp Tiền
                             </Link>
                         </li>
                         <li>
-                            <Link className="right" to="/login">
-                                <i className="far fa-user"></i> Đăng Nhập
+                            <Link onClick={handleReload} className="right" to="/dang-nhap">
+                                <i className="far fa-user"></i> {dataContext ? dataContext.name : 'Đăng Nhập'}
                             </Link>
                         </li>
                         <li>
-                            <Link className="right" to="/register">
-                                <i className="fas fa-plus"></i>
-                                <i className="far fa-user"></i> Đăng Kí
-                            </Link>
+                            {dataContext ? (
+                                <button onClick={handleLogout} className="right logout">
+                                    <i className="fas fa-sign-out-alt"></i>
+                                    <i className="fa-solid fa-right-from-bracket"></i> Đăng Xuất
+                                </button>
+                            ) : (
+                                <Link className="right" to="/dang-ki">
+                                    <i className="fas fa-plus"></i>
+                                    <i className="far fa-user"></i> Đăng Kí
+                                </Link>
+                            )}
                         </li>
                     </ul>
                 </nav>

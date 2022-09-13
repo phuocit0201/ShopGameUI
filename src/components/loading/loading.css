@@ -1,0 +1,38 @@
+.loading {
+    position: fixed;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.loading-login {
+    position: fixed;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.loading-login h3 {
+    color: #00ffff;
+    font-weight: bold;
+    padding: 20px;
+    text-align: center;
+}
+
+.wrapper__await-data {
+    width: 100%;
+    height: 500px;
+    background: transparent;
+}
