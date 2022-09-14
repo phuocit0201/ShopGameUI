@@ -1,7 +1,7 @@
 .loading {
     position: fixed;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.8) !important;
+    background: rgba(0, 0, 0, 0.9) !important;
     display: flex;
     justify-content: center;
     align-items: center;

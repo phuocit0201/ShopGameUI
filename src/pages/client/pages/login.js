@@ -1,17 +1,17 @@
 import { useContext, useEffect, useState } from 'react';
 import Form from '~/components/form';
 import $ from 'jquery';
-import API from '~/services/rest-client';
 import { useNavigate } from 'react-router-dom';
 import { LoadingData } from '~/components/loading';
 import { DataContext } from '~/contexts/DataContext';
 function Login() {
+    document.title = 'Đăng Nhập';
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [loginFalse, setLoginFalse] = useState(false);
     const handleReload = useContext(DataContext).handleReload;
-    const loadingDataContext = useContext(DataContext).loading;
+    const handleGoToTop = useContext(DataContext).handleGoToTop;
     const navigate = useNavigate();
     const access_token = localStorage.getItem('access_token');
     const handleLogin = async () => {
@@ -37,7 +37,7 @@ function Login() {
         if (access_token !== null) {
             navigate('/');
         }
-        $('html, body').animate({ scrollTop: 0 }, 0);
+        handleGoToTop();
     }, []);
     return (
         <div className="form-login">

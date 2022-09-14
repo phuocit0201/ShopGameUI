@@ -1,11 +1,10 @@
 import '~/asset/client/css/header.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '~/asset/fontawesome-free-5.15.3/css/all.min.css';
-import { Link } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '~/asset/client/images/logo/logo.png';
-import sale from '~/asset/client/images/home/sale.gif';
 import $ from 'jquery';
-import { useEffect, useContext, useLayoutEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { DataContext } from '~/contexts/DataContext';
 import { Logout } from '~/services/users';
 import { LoadingData } from '~/components/loading';
@@ -14,6 +13,7 @@ function Header() {
     const handleReload = useContext(DataContext).handleReload;
     const setDataContext = useContext(DataContext).setData;
     const [loading, isLogout, handleLogout] = Logout();
+    const navigate = useNavigate();
     const handleScroll = () => {
         if (window.scrollY > 10 && $(window).width() > 991) {
             $('.header').addClass('stick');
@@ -23,9 +23,10 @@ function Header() {
             $('.header-content').css('padding', '30px 15px');
         }
     };
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (isLogout === true) {
             setDataContext(null);
+            navigate('/');
         }
     }, [isLogout]);
     const handelResize = () => {
@@ -67,23 +68,28 @@ function Header() {
                         </div>
                     </div>
                 </div>
-
                 <nav className="nav-menu">
                     <ul className="nav-menu__content">
                         <li>
-                            <Link onClick={handleReload} className="left" to="/">
+                            <NavLink onClick={handleReload} className="left" to="/">
                                 Trang Chủ
-                            </Link>
+                            </NavLink>
                         </li>
                         <li>
-                            <Link onClick={handleReload} className="left" to="">
+                            <NavLink onClick={handleReload} className="left" to="/nap-the-cao">
                                 Nạp Tiền
-                            </Link>
+                            </NavLink>
                         </li>
                         <li>
-                            <Link onClick={handleReload} className="right" to="/dang-nhap">
-                                <i className="far fa-user"></i> {dataContext ? dataContext.name : 'Đăng Nhập'}
-                            </Link>
+                            {dataContext ? (
+                                <NavLink onClick={handleReload} className="right" to="/thong-tin-tai-khoan">
+                                    <i className="far fa-user"></i> {dataContext.name}
+                                </NavLink>
+                            ) : (
+                                <NavLink className="right" to="/dang-nhap">
+                                    <i className="far fa-user"></i> Đăng Nhập
+                                </NavLink>
+                            )}
                         </li>
                         <li>
                             {dataContext ? (
@@ -92,18 +98,15 @@ function Header() {
                                     <i className="fa-solid fa-right-from-bracket"></i> Đăng Xuất
                                 </button>
                             ) : (
-                                <Link className="right" to="/dang-ki">
+                                <NavLink className="right" to="/dang-ki">
                                     <i className="fas fa-plus"></i>
                                     <i className="far fa-user"></i> Đăng Kí
-                                </Link>
+                                </NavLink>
                             )}
                         </li>
                     </ul>
                 </nav>
             </div>
-            <Link className="bonus d-none d-lg-block d-xl-block d-md-block" to="/">
-                <img src={sale} alt="" />
-            </Link>
         </header>
     );
 }

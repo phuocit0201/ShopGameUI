@@ -37,14 +37,13 @@ function Logout() {
         const access_token = localStorage.getItem('access_token');
         if (access_token !== null) {
             await $.post('http://localhost:8000/api/v1/users/logout', { token: access_token }, (res) => {
-                if (res.data.status === true) {
+                if (res.status === true) {
                     console.log('logout success');
                     setLoading(false);
                     setIsLogout(true);
                     localStorage.removeItem('access_token');
                 }
-            })
-            .catch(() => {
+            }).catch(() => {
                 setLoading(false);
             });
         } else {

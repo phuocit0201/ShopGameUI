@@ -6,13 +6,20 @@ import categoryGame from '~/asset/client/images/nick/category-game.png';
 import btn from '~/asset/client/images/home/quayngay.png';
 import btnBuy from '~/asset/client/images/nick/btn-buy.png';
 import Notification from '~/components/notification';
-import { useEffect, useState } from 'react';
+import sale from '~/asset/client/images/home/sale.gif';
+import { useContext, useEffect, useState } from 'react';
 import API from '~/services/rest-client';
 import $ from 'jquery';
 import { AwaitData } from '~/components/loading';
+import { DataContext } from '~/contexts/DataContext';
 function Home() {
+    document.title = 'Trang Chủ';
     const [luckyList, setLuckyList] = useState([]);
     const [loadingData, setLoadingData] = useState(true);
+    const handleGoToTop = useContext(DataContext).handleGoToTop;
+    useEffect(() => {
+        handleGoToTop();
+    }, []);
     useEffect(() => {
         if (loadingData === true) {
             console.log('call api lay category');
@@ -209,6 +216,9 @@ function Home() {
                 title="THÔNG BÁO"
                 content="<h2 style='color:red;font-size:20px;'>Chào mừng ae đến với SHOPNICKNSO.COM</h2><p style='font-size:18px;'>Ae chú ý mua xu nick và dịch vụ trên shop thì hãy gạch thẻ tự động nhé auto nhanh chiết khấu tốt chỉ dùng thẻ viettel nhé </p>"
             />
+            <Link className="bonus d-none d-lg-block d-xl-block d-md-block" to="/">
+                <img src={sale} alt="" />
+            </Link>
         </div>
     );
 }

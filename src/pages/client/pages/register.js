@@ -1,14 +1,16 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from '~/components/form';
-import $ from 'jquery';
+import { DataContext } from '~/contexts/DataContext';
 function Register() {
+    document.title = 'Đăng Kí';
     let navigate = useNavigate();
+    const handleGoToTop = useContext(DataContext).handleGoToTop;
     useEffect(() => {
         if (localStorage.getItem('access_token') !== null) {
             navigate('/');
         }
-        $('html, body').animate({ scrollTop: 0 }, 0);
+        handleGoToTop();
     }, []);
     return (
         <div className="form-register">

@@ -1,0 +1,7 @@
+.container__box-profile--content .money-volatility thead tr th {
+    color: #0ff;
+}
+.container__box-profile--content .money-volatility tbody tr td {
+    color: rgb(66, 163, 248);
+    font-weight: 600;
+}

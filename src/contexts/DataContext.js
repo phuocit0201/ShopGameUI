@@ -1,15 +1,17 @@
 import { createContext, useEffect, useState } from 'react';
-import API from '~/services/rest-client';
 import $ from 'jquery';
-import { Loading } from '~/components/loading';
 export const DataContext = createContext();
 function DataContextProvider({ children }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [reload, setReload] = useState(0);
     const [isLogin, setIsLogin] = useState(false);
+    const handleGoToTop = () => {
+        $('html, body').animate({ scrollTop: 0 }, 0);
+    };
     const handleReload = () => {
         setReload((prev) => prev + 1);
+        console.log(reload);
         setLoading(true);
     };
     useEffect(() => {
@@ -40,8 +42,14 @@ function DataContextProvider({ children }) {
         };
         handleGetCategory();
     }, [reload]);
-    const dataExport = { data: data, handleReload: handleReload, setData: setData, loading: loading, isLogin: isLogin };
+    const dataExport = {
+        data: data,
+        handleReload: handleReload,
+        setData: setData,
+        loading: loading,
+        isLogin: isLogin,
+        handleGoToTop: handleGoToTop,
+    };
     return <DataContext.Provider value={dataExport}>{children}</DataContext.Provider>;
-    // return loading ? <Loading /> : <DataContext.Provider value={dataExport}>{children}</DataContext.Provider>;
 }
 export default DataContextProvider;
