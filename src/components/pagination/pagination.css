@@ -1,0 +1,12 @@
+.pagination li {
+    width: auto;
+    height: 25px;
+}
+.pagination li button {
+    font-weight: 600;
+    background: transparent;
+    font-size: 15px;
+    color: #0ff;
+    padding-left: 10px;
+    padding-right: 10px;
+}

@@ -5,3 +5,55 @@
     color: rgb(66, 163, 248);
     font-weight: 600;
 }
+
+.data__money-volatility--null {
+    border: none;
+    text-align: center;
+}
+
+.box__search-money-volatility {
+    padding-bottom: 10px;
+}
+
+.box__search-money-volatility label {
+    color: #0ff;
+    padding-right: 20px;
+}
+
+.box__search-money-volatility label select {
+    background: transparent;
+    border: 1px solid #0ff;
+    color: #0ff;
+    border-radius: 5px;
+}
+
+.box__search-money-volatility label select option {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.search___by-date .flatpickr-input {
+    color: #0ff;
+    background: transparent;
+    border: 1px solid #0ff;
+}
+
+.pagination li {
+    width: auto;
+    height: 25px;
+}
+.pagination li button {
+    font-weight: 600;
+    background: transparent;
+    font-size: 15px;
+    color: #0ff;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.pagination li .active {
+    background-color: rgba(4, 204, 204, 0.562);
+}
+
+.flatpickr-calendar {
+    background: #0ff;
+}

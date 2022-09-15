@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import $ from 'jquery';
-import API from '~/services/rest-client';
 function GetMe() {
     const [info, setInfo] = useState(null);
     const [reload, setReload] = useState(0);

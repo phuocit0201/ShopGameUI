@@ -22,7 +22,6 @@ function Home() {
     }, []);
     useEffect(() => {
         if (loadingData === true) {
-            console.log('call api lay category');
             API.get('http://localhost:8000/api/v1/categories/index?page=1&per_page=10')
                 .then((res) => {
                     setLuckyList(res.data.data);

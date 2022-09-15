@@ -17,7 +17,6 @@ function DataContextProvider({ children }) {
     useEffect(() => {
         const handleGetCategory = async () => {
             if (localStorage.getItem('access_token') !== null) {
-                console.log('request api dataContext');
                 await $.post(
                     'http://localhost:8000/api/v1/users/get-me',
                     {
