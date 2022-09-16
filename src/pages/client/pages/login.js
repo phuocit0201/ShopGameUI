@@ -6,26 +6,25 @@ import { LoadingData } from '~/components/loading';
 import { DataContext } from '~/contexts/DataContext';
 function Login() {
     document.title = 'Đăng Nhập';
+    const dataContext = useContext(DataContext);
+    const handleReload = dataContext.handleReload;
+    const handleGoToTop = dataContext.handleGoToTop;
+    const baseUrl = dataContext.baseUrl;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [loginFalse, setLoginFalse] = useState(false);
-    const handleReload = useContext(DataContext).handleReload;
-    const handleGoToTop = useContext(DataContext).handleGoToTop;
+
     const navigate = useNavigate();
     const access_token = localStorage.getItem('access_token');
     const handleLogin = async () => {
         if (username !== '' && password !== '') {
             setLoading(true);
-            await $.post(
-                'http://localhost:8000/api/v1/users/login',
-                { username: username, password: password },
-                (response) => {
-                    localStorage.setItem('access_token', response.access_token);
-                    handleReload();
-                    navigate('/');
-                },
-            ).catch(() => {
+            await $.post(baseUrl + 'users/login', { username: username, password: password }, (response) => {
+                localStorage.setItem('access_token', response.access_token);
+                handleReload();
+                navigate('/');
+            }).catch(() => {
                 setLoading(false);
                 setLoginFalse(true);
                 navigate('/dang-nhap');
@@ -60,7 +59,7 @@ function Login() {
                     </div>
                     <div className="content__box--btn d-flex justify-content-center">
                         <button onClick={handleLogin}>ĐĂNG NHẬP</button>
-                        <button id="register">ĐĂNG KÍ</button>
+                        {/* <button id="register">ĐĂNG KÍ</button> */}
                     </div>
                 </div>
             </Form>

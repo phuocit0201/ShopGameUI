@@ -6,6 +6,7 @@ function DataContextProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [reload, setReload] = useState(0);
     const [isLogin, setIsLogin] = useState(false);
+    const baseUrl = 'http://localhost:8000/api/v1/';
     const handleGoToTop = () => {
         $('html, body').animate({ scrollTop: 0 }, 0);
     };
@@ -48,6 +49,7 @@ function DataContextProvider({ children }) {
         loading: loading,
         isLogin: isLogin,
         handleGoToTop: handleGoToTop,
+        baseUrl: baseUrl,
     };
     return <DataContext.Provider value={dataExport}>{children}</DataContext.Provider>;
 }
