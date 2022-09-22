@@ -6,16 +6,18 @@ import HomeAdmin from '~/pages/admin/pages/home';
 import Profile from '~/pages/client/pages/profile';
 import ChangePassword from '~/pages/client/pages/changepass';
 import MoneyVolatility from '~/pages/client/pages/money-volatility';
+import RechargeCard from '~/pages/client/pages/recharge-card';
 const publicRoutes = [
-    { path: '/', component: Home, layout: Layout },
-    { path: '/dang-nhap', component: Login, layout: Layout },
-    { path: '/dang-ki', component: Register, layout: Layout },
+  { path: '/', component: Home, layout: Layout },
+  { path: '/dang-nhap', component: Login, layout: Layout },
+  { path: '/dang-ki', component: Register, layout: Layout },
 ];
 const authRoutesClient = [
-    { path: '/admin', component: HomeAdmin, layout: Layout },
-    { path: '/thong-tin-tai-khoan', component: Profile, layout: Layout },
-    { path: '/doi-mat-khau', component: ChangePassword, layout: Layout },
-    { path: '/bien-dong-so-du', component: MoneyVolatility, layout: Layout },
+  { path: '/admin', component: HomeAdmin, layout: Layout },
+  { path: '/thong-tin-tai-khoan', component: Profile, layout: Layout },
+  { path: '/doi-mat-khau', component: ChangePassword, layout: Layout },
+  { path: '/bien-dong-so-du', component: MoneyVolatility, layout: Layout },
+  { path: '/nap-the', component: RechargeCard, layout: Layout },
 ];
 
 export { authRoutesClient, publicRoutes };

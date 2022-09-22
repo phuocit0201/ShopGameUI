@@ -1,59 +1,85 @@
 .container__box-profile--content .money-volatility thead tr th {
-    color: #0ff;
+  color: #0ff;
 }
+
 .container__box-profile--content .money-volatility tbody tr td {
-    color: rgb(66, 163, 248);
-    font-weight: 600;
+  color: rgb(66, 163, 248);
+  font-weight: 600;
+}
+
+.money-volatility,
+.box__search-money-volatility {
+  min-width: 750px;
+}
+
+.container__content--money-volatility {
+  overflow-x: scroll;
 }
 
 .data__money-volatility--null {
-    border: none;
-    text-align: center;
+  border: none;
+  text-align: center;
 }
 
 .box__search-money-volatility {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .box__search-money-volatility label {
-    color: #0ff;
-    padding-right: 20px;
+  color: #0ff;
+  padding-right: 20px;
 }
 
 .box__search-money-volatility label select {
-    background: transparent;
-    border: 1px solid #0ff;
-    color: #0ff;
-    border-radius: 5px;
+  background: transparent;
+  border: 1px solid #0ff;
+  color: #0ff;
+  border-radius: 5px;
 }
-
+.box__search-money-volatility label select:focus-visible {
+  outline: none;
+}
 .box__search-money-volatility label select option {
-    background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .search___by-date .flatpickr-input {
-    color: #0ff;
-    background: transparent;
-    border: 1px solid #0ff;
+  color: #0ff;
+  background: transparent;
+  border: 1px solid #0ff;
 }
 
 .pagination li {
-    width: auto;
-    height: 25px;
+  width: auto;
 }
 .pagination li button {
-    font-weight: 600;
-    background: transparent;
-    font-size: 15px;
-    color: #0ff;
-    padding-left: 10px;
-    padding-right: 10px;
+  font-weight: 600;
+  background: transparent;
+  font-size: 15px;
+  color: #0ff;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .pagination li .active {
-    background-color: rgba(4, 204, 204, 0.562);
+  background-color: rgba(4, 204, 204, 0.562);
 }
 
 .flatpickr-calendar {
-    background: #0ff;
+  background: #0ff;
+}
+
+.container__content--money-volatility::-webkit-scrollbar {
+  height: 7px;
+}
+
+.container__content--money-volatility::-webkit-scrollbar-thumb {
+  background-color: #0ff;
+  border-radius: 5px;
+}
+@media screen and (max-width: 1057px) {
+  .container__content--money-volatility::-webkit-scrollbar-track {
+    background-color: #999;
+    border-radius: 5px;
+  }
 }
