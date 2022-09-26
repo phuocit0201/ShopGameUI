@@ -1,0 +1,32 @@
+.container__card--info {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  padding: 20px 30px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px #0ff;
+}
+.container__card--info .card__info--logo {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.container__card--info .card__info--logo img {
+  width: 100px;
+  height: 100px;
+}
+
+.container__card--info .card__info--logo .logo__tsr {
+  width: 231px;
+  height: 63;
+}
+
+.container__card--info .card__info--content table thead tr th {
+  color: #0ff;
+  font-family: 'Avenir Next W01', 'Lato', -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+}
+
+.container__card--info .card__info--content table thead tr .description {
+  text-align: center;
+}

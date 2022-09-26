@@ -44,7 +44,9 @@ function Login() {
       <Form>
         <div className="container__content--box">
           <h3>ĐĂNG NHẬP HỆ THỐNG</h3>
-          {loginFalse && <h4 style={{ color: 'red', fontWeight: 'bold' }}>Tài khoản hoặc mật khẩu sai!</h4>}
+          {loginFalse && (
+            <h4 style={{ color: 'red', fontWeight: 'bold', fontSize: 14 }}>Tài khoản hoặc mật khẩu sai!</h4>
+          )}
           <div className="content__box--input">
             <label htmlFor="">Tài Khoản</label>
             <input onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Nhập tài khoản" />

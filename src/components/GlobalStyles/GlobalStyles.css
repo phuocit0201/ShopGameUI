@@ -2,44 +2,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --primary: #fe2c55;
-    --defaultl-layout-header-heigh: 60px;
-    --defaultl-layout-width: 1150px;
-    --black: #000;
-    --text-color: #333;
+  --primary: #fe2c55;
+  --defaultl-layout-header-heigh: 60px;
+  --defaultl-layout-width: 1150px;
+  --black: #000;
+  --text-color: #333;
 }
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 html {
-    font-size: 62.5%;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.5rem;
-    line-height: 1.5;
-    text-rendering: optimizeSpeed;
-    color: var(--text-color);
-    background: #333
-        url('https://1.bp.blogspot.com/-amBoCseCz-8/VIVT9LlXs0I/AAAAAAAAOKo/ctoITA5ll00/s1600/hinh-anh-naruto-vs-sakase%2B(13).jpg');
-    background-attachment: fixed;
-    color: #fff;
-    background-size: 100%;
+  font-family: 'Montserrat', sans-serif;
+  text-rendering: optimizeSpeed;
+  color: var(--text-color);
+  background: #333
+    url('https://1.bp.blogspot.com/-amBoCseCz-8/VIVT9LlXs0I/AAAAAAAAOKo/ctoITA5ll00/s1600/hinh-anh-naruto-vs-sakase%2B(13).jpg');
+  background-attachment: fixed;
+  color: #fff;
+  background-size: 100%;
 }
 
 button,
 input,
 [tabindex] {
-    outline: none;
-    border: none;
+  outline: none;
+  border: none;
 }
 a[href] {
-    color: var(--tex-color);
-    text-decoration: none;
+  color: var(--tex-color);
+  text-decoration: none;
 }
 li {
-    list-style: none;
+  list-style: none;
 }

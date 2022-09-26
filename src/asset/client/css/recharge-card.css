@@ -42,6 +42,10 @@
   font-weight: 500;
 }
 
+.pagination li button:focus {
+  box-shadow: none;
+}
+
 .container__recharge-card .container__notification p {
   padding: 10px 0px;
 }
@@ -55,6 +59,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 /*---------------------------------------HISTORY RECHARGE CARD----------------------------*/
 .container__history--recharge-card h3 {
+  font-size: 20px;
   font-weight: 600;
   color: #0ff;
   display: inline;
@@ -70,7 +75,7 @@ input[type='number']::-webkit-outer-spin-button {
   overflow-x: scroll;
 }
 .container__table--recharge-card table {
-  min-width: 800px;
+  min-width: 900px;
 }
 
 .container__table--recharge-card::-webkit-scrollbar {

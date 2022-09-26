@@ -1,145 +1,147 @@
 .content__banner--container {
-    padding: 20px 0px;
+  padding: 20px 0px;
 }
 
 .content .content__banner {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 15px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 15px;
 }
 
 .content .content__banner .content__banner--left h3 {
-    padding: 5px;
-    text-align: center;
-    font-weight: 700;
-    color: #ff502e;
-    background: #1d1d1d;
+  font-size: 20px;
+  padding: 5px;
+  text-align: center;
+  font-weight: 700;
+  color: #ff502e;
+  background: #1d1d1d;
 }
 
 .content .content__banner .banner__right--img img {
-    width: 100%;
+  width: 100%;
 }
 
 .content .content__banner .banner__left--top {
-    padding: unset;
-    position: relative;
+  padding: unset;
+  position: relative;
 }
 
 .content .content__banner .banner__left--top li {
-    margin-bottom: 35px;
+  margin-bottom: 35px;
 }
 
 .content .content__banner .banner__left--top li i {
-    display: inline-block;
-    background: #0ce3ac;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    text-align: center;
+  display: inline-block;
+  background: #0ce3ac;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  text-align: center;
 }
 
 .content .content__banner .banner__left--top span {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 .content .content__banner .banner__left--top label {
-    position: absolute;
-    right: 0;
-    background: #ff502e;
-    padding: 2px 20px;
-    border-radius: 5px;
-    color: #000000;
-    font-weight: bold;
+  position: absolute;
+  right: 0;
+  background: #ff502e;
+  padding: 2px 20px;
+  border-radius: 5px;
+  color: #000000;
+  font-weight: bold;
 }
 /*---------------------------------------------------danh mục vòng quay---------------------------*/
 .content .category__container {
-    padding: 20px 0px;
+  padding: 20px 0px;
 }
 
 .content .category__content {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 15px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 15px;
 }
 
 .category-lucky__content--title {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 50px;
 }
 
 .category-lucky__content--title h2 {
-    font-size: 24px;
-    font-weight: bold;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .category-lucky__content--title span {
-    width: 200px;
-    height: 5px;
-    background-color: #32c5d2 !important;
-    border-radius: 2px;
+  width: 200px;
+  height: 5px;
+  background-color: #32c5d2 !important;
+  border-radius: 2px;
 }
 
 .content__box--container {
-    border: 2px solid #fff;
-    border-radius: 5px;
-    padding: unset;
-    transition: all 0.2s linear;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  padding: unset;
+  transition: all 0.2s linear;
 }
 
 .content__box--container:hover {
-    border: 2px solid #ff06fa;
-    box-shadow: 0px 0px 15px #da77f9;
+  border: 2px solid #ff06fa;
+  box-shadow: 0px 0px 15px #da77f9;
 }
 
 .category-lucky__content--box {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .category-lucky__content--box img {
-    width: 100%;
+  width: 100%;
 }
 
 .content__box--info h4 {
-    text-align: center;
-    padding: 10px 0px;
-    font-weight: bold;
-    color: #f1c40f;
+  font-size: 18px;
+  text-align: center;
+  padding: 10px 0px;
+  font-weight: bold;
+  color: #f1c40f;
 }
 
 .content__box--info p {
-    text-align: center;
-    font-weight: 500;
+  text-align: center;
+  font-weight: 500;
 }
 
 .content__box--info div {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .content__box--info div span {
-    border: 2px solid;
-    border-radius: 5px;
-    font-weight: 600;
-    padding: 5px 10px;
-    font-size: 14px;
+  border: 2px solid;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 5px 10px;
+  font-size: 14px;
 }
 
 .content__box--info div span:first-child {
-    margin-right: 10px;
-    color: #3f0;
+  margin-right: 10px;
+  color: #3f0;
 }
 
 .content__box--info div span:last-child {
-    color: red;
-    margin-left: 10px;
+  color: red;
+  margin-left: 10px;
 }
 
 .content__box--info-btn {
-    padding: 20px;
+  padding: 20px;
 }
 
 .content__box--info-btn img:hover {
-    filter: brightness(130%);
+  filter: brightness(130%);
 }
 
 /*------------------------------------------NOTIFICATION--------------------------------------*/

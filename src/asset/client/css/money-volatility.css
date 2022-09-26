@@ -83,3 +83,24 @@
     border-radius: 5px;
   }
 }
+.page-next button,
+.page-after button {
+  height: 100%;
+  border-bottom: 1px solid #fff;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+.page-next button {
+  border-right: 1px solid #fff;
+}
+.page-after button {
+  border-left: 1px solid #fff;
+}
+.page-item button:hover {
+  background: none;
+  color: #fff;
+}
+
+.page-item .active:hover {
+  background-color: rgba(4, 204, 204, 0.562);
+}

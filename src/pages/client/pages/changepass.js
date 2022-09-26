@@ -22,8 +22,6 @@ function ChangePassword() {
     password_confirm: '',
   });
 
-  console.log(status);
-
   const handleValidationPasswordOld = (e) => {
     setPasswordOld(e.target.value);
     if (e.target.value.length >= 6 && e.target.value.length <= 50 && e.target.value.match(/[^a-zA-Z0-9]/) === null) {

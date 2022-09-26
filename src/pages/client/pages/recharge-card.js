@@ -31,7 +31,30 @@ function RechargeCard() {
   const [date, setDate] = useState(new Date());
   const [dataHistory, setDataHistory] = useState();
   const [refresh, setRefresh] = useState(0);
+  const [perPage, setPerPage] = useState(5);
+  const [page, setPage] = useState(1);
+  const loadingAuth = dataContext.loading;
 
+  //set số trang khi người dùng bấm chuyển trang
+  const handleSetPage = (e) => {
+    setPage(e.target.textContent);
+  };
+  //tăng số trang lên 1 khi người dùng bấm next
+  const handleNextPage = () => {
+    if (page > 0 && page < dataHistory.last_page) {
+      setPage(parseInt(page) + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+  const handleSetPerPage = (e) => {
+    setPerPage(e.target.value);
+    setPage(1);
+  };
   //làm mới lại dữ liệu mỗi khi gửi thẻ thành công lên hệ thống
   const handleRefresh = () => {
     setRefresh(refresh + 1);
@@ -51,7 +74,6 @@ function RechargeCard() {
   // nạp card
   const handleRequestCard = () => {
     setLoadingRequestCard(true);
-    console.log(serial + code + telco);
     $.ajax({
       url: baseUrl + 'cards/request-card-tsr',
       type: 'POST',
@@ -71,9 +93,8 @@ function RechargeCard() {
           setLoadingHistory(true);
           setLoadingGetTelco(true);
           handleRefresh();
-        } else {
-          setLoadingRequestCard(false);
         }
+        setLoadingRequestCard(false);
       })
       .fail((response) => {
         if (response.status === 403) {
@@ -96,19 +117,25 @@ function RechargeCard() {
       },
     })
       .done((response) => {
-        setListValueCard(response);
-        handleParserTypeCard(response);
+        if (response.data !== null) {
+          setListValueCard(response.data);
+          handleParserTypeCard(response.data);
+        } else {
+          setMessageRecharge({ mess: 'Hệ thống nạp thẻ đang bảo trì vui lòng quay lại sau', status: false });
+        }
         setLoadingGetTelco(false);
       })
-      .catch(() => {
+      .fail((response) => {
+        setMessageRecharge({ mess: response.responseJSON.mess, status: false });
         setLoadingGetTelco(false);
+        setListValueCard([]);
       });
   };
 
   /* gọi api lấy lịch sử nạp thẻ */
   const handleGetHistory = () => {
     $.ajax({
-      url: baseUrl + 'cards/history?page=1&per_page=20',
+      url: baseUrl + `cards/history?page=${page}&per_page=${perPage}`,
       type: 'GET',
       data: {
         token: localStorage.getItem('access_token'),
@@ -120,7 +147,12 @@ function RechargeCard() {
         }
         setLoadingHistory(false);
       })
-      .fail(() => {
+      .fail((response) => {
+        if (response.status === 403) {
+          setMessageRecharge({ mess: 'Phiên đăng nhập của bạn đã hết hạn', status: false });
+          localStorage.removeItem('access_token');
+          handleReload();
+        }
         setDataHistory({ data: [] });
         setLoadingHistory(false);
         setLoadingGetTelco(false);
@@ -138,16 +170,22 @@ function RechargeCard() {
     });
   }, [telco, refresh]);
 
-  //gọi api khi vừa load trang hoặc refresh thay đổi
+  //gọi api khi vừa load trang hoặc khi thay đổi số lượng hiển thị, thay đổi trang, refresh dữ liệu
   useEffect(() => {
-    handleGetHistory();
+    if (loadingAuth === false) {
+      handleGetHistory();
+    }
+  }, [refresh, perPage, page, loadingAuth]);
+
+  //gọi api khi vừa load trang hoặc refresh dữ liệu
+  useEffect(() => {
     handleGetCards();
   }, [refresh]);
 
+  //gọi api khi vừa load
   useEffect(() => {
     if (loadingGetTelco === false && loadingHistory === false) {
       setLoading(false);
-      setLoadingRequestCard(false);
     }
   }, [loadingGetTelco, loadingHistory]);
   return (
@@ -161,57 +199,60 @@ function RechargeCard() {
               <p className={messageRecharge.status === true ? 'success' : 'error'}>{messageRecharge.mess}</p>
             )}
           </div>
-          <div className="recharge__card-content row">
-            <div className="content__box--input col-xl-3 col-lg-3 col-md-6 col-sm-12">
-              <label htmlFor="">Loại Thẻ</label>
-              <select value={telco} onChange={(e) => setTelco(e.target.value)} name="" id="">
-                {typeCard.map((item, index) => (
-                  <option key={index} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+          {typeCard.length > 0 && (
+            <div className="recharge__card-content row">
+              <div className="content__box--input col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                <label htmlFor="">Loại Thẻ</label>
+                <select value={telco} onChange={(e) => setTelco(e.target.value)} name="" id="">
+                  {typeCard.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="content__box--input col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                <label htmlFor="">Mệnh Giá</label>
+                <select value={declareValue} onChange={(e) => setDeclareValue(e.target.value)} name="" id="">
+                  <option value="0">Chọn mệnh giá</option>
+                  {valueCardByTelco.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {new Intl.NumberFormat().format(item.value)} ({item.fees}%)
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="content__box--input col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                <label htmlFor="">Số Serial</label>
+                <input
+                  value={serial}
+                  onChange={(e) => setSerial(e.target.value)}
+                  type="number"
+                  placeholder="Nhập số serial"
+                />
+              </div>
+              <div className="content__box--input col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                <label htmlFor="">Mã số thẻ</label>
+                <input
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  type="number"
+                  placeholder="Nhập mã số thẻ"
+                />
+              </div>
+              <div className="content__box--btn d-flex justify-content-center">
+                <button onClick={handleRequestCard}>NẠP THẺ</button>
+              </div>
             </div>
-            <div className="content__box--input col-xl-3 col-lg-3 col-md-6 col-sm-12">
-              <label htmlFor="">Mệnh Giá</label>
-              <select value={declareValue} onChange={(e) => setDeclareValue(e.target.value)} name="" id="">
-                <option value="0">Chọn mệnh giá</option>
-                {valueCardByTelco.map((item, index) => (
-                  <option key={index} value={item.value}>
-                    {new Intl.NumberFormat().format(item.value)} ({item.fees}%)
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="content__box--input col-xl-3 col-lg-3 col-md-6 col-sm-12">
-              <label htmlFor="">Số Serial</label>
-              <input
-                value={serial}
-                onChange={(e) => setSerial(e.target.value)}
-                type="number"
-                placeholder="Nhập số serial"
-              />
-            </div>
-            <div className="content__box--input col-xl-3 col-lg-3 col-md-6 col-sm-12">
-              <label htmlFor="">Mã số thẻ</label>
-              <input
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                type="number"
-                placeholder="Nhập mã số thẻ"
-              />
-            </div>
-          </div>
-          <div className="content__box--btn d-flex justify-content-center">
-            <button onClick={handleRequestCard}>NẠP THẺ</button>
-          </div>
+          )}
+
           <div className="container__history--recharge-card">
             <h3>LỊCH SỬ NẠP THẺ</h3>
             <div className="container__table--recharge-card">
               <div className="box__search-money-volatility">
                 <label htmlFor="" className="per_page">
                   <span style={{ paddingRight: 5, fontWeight: '500' }}>Số mục hiển thị</span>
-                  <select>
+                  <select onChange={(e) => handleSetPerPage(e)}>
                     <option value={5}>5</option>
                     <option value={25}>25</option>
                     <option value={50}>50</option>
@@ -264,6 +305,32 @@ function RechargeCard() {
                   )}
                 </tbody>
               </table>
+              {dataHistory.data.length !== 0 && (
+                <nav aria-label="Page navigation example pagination__recharge">
+                  <ul className="pagination">
+                    <li className="page-item page-after">
+                      <button onClick={handlePreviousPage}>Trước</button>
+                    </li>
+                    {dataHistory.links.map(
+                      (item, index) =>
+                        index !== 0 &&
+                        index !== dataHistory.links.length - 1 && (
+                          <li key={index} className="page-item">
+                            <button
+                              onClick={(e) => handleSetPage(e)}
+                              className={item.active ? 'page-link active' : 'page-link'}
+                            >
+                              {item.label}
+                            </button>
+                          </li>
+                        ),
+                    )}
+                    <li className="page-item page-next">
+                      <button onClick={handleNextPage}>Tiếp theo</button>
+                    </li>
+                  </ul>
+                </nav>
+              )}
             </div>
           </div>
         </div>

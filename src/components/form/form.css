@@ -22,6 +22,7 @@
 }
 
 .container__content--box h3 {
+  font-size: 20px;
   text-align: center;
   color: #fff;
   font-weight: 600;

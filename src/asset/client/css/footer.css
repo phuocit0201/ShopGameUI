@@ -1,32 +1,36 @@
 .footer {
-    background: #000;
+  background: #000;
+}
+
+.footer .container .footer-content div h3 {
+  font-size: 24px;
 }
 
 .footer-content {
-    padding-top: 80px;
-    padding-bottom: 20px;
+  padding-top: 80px;
+  padding-bottom: 20px;
 }
 
 .footer-content div p {
-    color: #5c6873;
-    font-weight: 400;
+  color: #5c6873;
+  font-weight: 400;
 }
 
 .about-shop-end ul {
-    padding: 0;
+  padding: 0;
 }
 .about-shop-end ul li span {
-    color: #5c6873;
-    padding-left: 10px;
+  color: #5c6873;
+  padding-left: 10px;
 }
 .about-shop-end ul li i {
-    color: #32c5d2;
-    width: 15px;
+  color: #32c5d2;
+  width: 15px;
 }
 .author {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 .author-name {
-    color: #32c5d2;
-    font-weight: 700;
+  color: #32c5d2;
+  font-weight: 700;
 }

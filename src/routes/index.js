@@ -7,6 +7,8 @@ import Profile from '~/pages/client/pages/profile';
 import ChangePassword from '~/pages/client/pages/changepass';
 import MoneyVolatility from '~/pages/client/pages/money-volatility';
 import RechargeCard from '~/pages/client/pages/recharge-card';
+import AtmMomo from '~/pages/client/pages/atm-momo';
+import HistoryBuyAccount from '~/pages/client/pages/history-buy-account';
 const publicRoutes = [
   { path: '/', component: Home, layout: Layout },
   { path: '/dang-nhap', component: Login, layout: Layout },
@@ -18,6 +20,8 @@ const authRoutesClient = [
   { path: '/doi-mat-khau', component: ChangePassword, layout: Layout },
   { path: '/bien-dong-so-du', component: MoneyVolatility, layout: Layout },
   { path: '/nap-the', component: RechargeCard, layout: Layout },
+  { path: '/nap-tien-qua-ngan-hang', component: AtmMomo, layout: Layout },
+  { path: '/lich-su-mua-nick', component: HistoryBuyAccount, layout: Layout },
 ];
 
 export { authRoutesClient, publicRoutes };

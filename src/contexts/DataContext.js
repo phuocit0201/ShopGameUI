@@ -6,7 +6,7 @@ function DataContextProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(0);
   const [isLogin, setIsLogin] = useState(false);
-  const baseUrl = 'http://localhost:8000/api/v1/';
+  const baseUrl = 'http://localhost/ShopGame/public/api/v1/';
   const handleGoToTop = () => {
     $('html, body').animate({ scrollTop: 0 }, 0);
   };

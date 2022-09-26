@@ -19,14 +19,12 @@ function MoneyVolatility() {
   const [perPage, setPerPage] = useState(5);
   const [page, setPage] = useState(1);
   const [date, setDate] = useState(new Date());
-
   const handleSetPage = (e) => {
     setPage(e.target.textContent);
   };
-
   const handleNextPage = () => {
     if (page > 0 && page < moneyVolatility.last_page) {
-      setPage(page + 1);
+      setPage(parseInt(page) + 1);
     }
   };
   const handlePreviousPage = () => {
@@ -118,12 +116,10 @@ function MoneyVolatility() {
           </table>
 
           {moneyVolatility.data.length !== 0 && (
-            <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example pagination__recharge">
               <ul className="pagination">
-                <li className="page-item">
-                  <button onClick={handlePreviousPage} className="page-link">
-                    Trước
-                  </button>
+                <li className="page-item page-after">
+                  <button onClick={handlePreviousPage}>Trước</button>
                 </li>
                 {moneyVolatility.links.map(
                   (item, index) =>
@@ -139,10 +135,8 @@ function MoneyVolatility() {
                       </li>
                     ),
                 )}
-                <li className="page-item">
-                  <button onClick={handleNextPage} className="page-link">
-                    Tiếp theo
-                  </button>
+                <li className="page-item page-next">
+                  <button onClick={handleNextPage}>Tiếp theo</button>
                 </li>
               </ul>
             </nav>
