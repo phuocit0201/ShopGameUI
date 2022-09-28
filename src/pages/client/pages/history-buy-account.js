@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import moment from 'moment/moment';
 import { Loading } from '~/components/loading';
 import $ from 'jquery';
+import Notification from '~/components/notification';
 function HistoryBuyAccount() {
   const title = 'LỊCH SỬ MUA NICK';
   document.title = title;
@@ -19,6 +20,7 @@ function HistoryBuyAccount() {
   const [listOrderDetail, setListOrderDetail] = useState([]);
   const [perPage, setPerPage] = useState(5);
   const [page, setPage] = useState(1);
+  const [showAccount, setShowAccount] = useState({});
 
   const handleSetPage = (e) => {
     setPage(e.target.textContent);
@@ -92,7 +94,9 @@ function HistoryBuyAccount() {
     const idAccount = parseInt(e.currentTarget.attributes['idaccount'].value);
     listOrderDetail.forEach((account) => {
       if (idAccount === account.id) {
-        console.log(account);
+        setShowAccount(account);
+        $('.notification').css({ opacity: 1, 'pointer-events': 'unset' });
+        $('#notification').css({ transform: 'unset', transition: 'all 0.25s linear' });
       }
     });
   };
@@ -109,6 +113,7 @@ function HistoryBuyAccount() {
       setLoading(false);
     }
   }, [loadingHistoty, loadingOrderDetail]);
+
   return (
     <LayoutSystem title={title}>
       {loading ? (
@@ -189,6 +194,28 @@ function HistoryBuyAccount() {
           )}
         </div>
       )}
+      <Notification title={'Chi Tiết'}>
+        <table className="table show__detail--account">
+          <thead>
+            <tr>
+              <th scope="col">Id:</th>
+              <th scope="col">{showAccount.id}</th>
+            </tr>
+            <tr>
+              <th scope="col">Tài Khoản:</th>
+              <th scope="col">{showAccount.username}</th>
+            </tr>
+            <tr>
+              <th scope="col">Mật Khẩu:</th>
+              <th scope="col">{showAccount.password}</th>
+            </tr>
+            <tr>
+              <th scope="col">Giá Mua:</th>
+              <th scope="col">{new Intl.NumberFormat().format(showAccount.sale_price)} VNĐ</th>
+            </tr>
+          </thead>
+        </table>
+      </Notification>
     </LayoutSystem>
   );
 }

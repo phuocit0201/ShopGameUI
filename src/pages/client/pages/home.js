@@ -1,8 +1,6 @@
 import '~/asset/client/css/home.css';
 import { Link } from 'react-router-dom';
 import team from '~/asset/client/images/home/team.gif';
-import lucky from '~/asset/client/images/lucky/lucky.png';
-import categoryGame from '~/asset/client/images/nick/category-game.png';
 import btn from '~/asset/client/images/home/quayngay.png';
 import btnBuy from '~/asset/client/images/nick/btn-buy.png';
 import Notification from '~/components/notification';
@@ -12,33 +10,37 @@ import API from '~/services/rest-client';
 import $ from 'jquery';
 import { AwaitData } from '~/components/loading';
 import { DataContext } from '~/contexts/DataContext';
+import parse from 'html-react-parser';
+
 function Home() {
   document.title = 'Trang Chủ';
   const dataContext = useContext(DataContext);
-  const [luckyList, setLuckyList] = useState([]);
-  const [loadingData, setLoadingData] = useState(true);
   const handleGoToTop = dataContext.handleGoToTop;
   const baseUrl = dataContext.baseUrl;
+  const handleGetValueSetting = dataContext.handleGetValueSetting;
+  const [notification, setNotification] = useState('');
+  const loadingSystem = dataContext.loading;
+  const [categoryGameList, setCategoryGame] = useState([]);
+  const [loadingData, setLoadingData] = useState(true);
   useEffect(() => {
     handleGoToTop();
   }, []);
   useEffect(() => {
-    if (loadingData === true) {
+    if (loadingSystem === false) {
       API.get(baseUrl + 'categories/index?page=1&per_page=10')
         .then((res) => {
-          setLuckyList(res.data.data);
+          setCategoryGame(res.data.data);
           setLoadingData(false);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(() => {});
     }
 
     if (loadingData === false) {
+      setNotification(handleGetValueSetting('notification'));
       $('.notification').css({ opacity: 1, 'pointer-events': 'unset' });
       $('#notification').css({ transform: 'unset', transition: 'all 0.25s linear' });
     }
-  }, [loadingData]);
+  }, [loadingData, loadingSystem]);
   return (
     <div className="content container">
       <div className="content__banner--container">
@@ -102,11 +104,11 @@ function Home() {
                 <h2 className="text-center">DANH MỤC VÒNG QUAY</h2>
                 <span></span>
               </div>
-              {luckyList
-                ? luckyList.map((item, index) => (
+              {categoryGameList
+                ? categoryGameList.map((item, index) => (
                     <div key={index} className="category-lucky__content--box col-sm-6 col-md-4 col-lg-3 col-xl-3">
                       <div className="content__box--container">
-                        <img src={lucky} alt="" />
+                        <img src={item.img} alt="" />
                         <div className="content__box--info">
                           <h4>
                             <Link to="/">{item.name}</Link>
@@ -137,83 +139,35 @@ function Home() {
                 <h2 className="text-center">DANH MỤC NICK GAME</h2>
                 <span></span>
               </div>
-              <div className="category-lucky__content--box col-lg-3">
-                <div className="content__box--container">
-                  <img src={categoryGame} alt="" />
-                  <div className="content__box--info">
-                    <h4>
-                      <Link to="/">NICK GAME LIÊN QUÂN</Link>
-                    </h4>
-                    <p>Số lượng: 20.999</p>
-                    <p>Đã bán: 10.999</p>
-                    <div className="content__box--info-btn">
-                      <Link to="/">
-                        <img src={btnBuy} alt="" />
-                      </Link>
+              {categoryGameList
+                ? categoryGameList.map((item, index) => (
+                    <div key={index} className="category-lucky__content--box col-lg-3">
+                      <div className="content__box--container">
+                        <img src={item.img} alt="" />
+                        <div className="content__box--info">
+                          <h4>
+                            <Link to="/">{item.name}</Link>
+                          </h4>
+                          <p>Số lượng: 20.999</p>
+                          <p>Đã bán: 10.999</p>
+                          <div className="content__box--info-btn">
+                            <Link to={'/danh-muc-game/' + item.slug}>
+                              <img src={btnBuy} alt="" />
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="category-lucky__content--box col-lg-3">
-                <div className="content__box--container">
-                  <img src={categoryGame} alt="" />
-                  <div className="content__box--info">
-                    <h4>
-                      <Link to="/">NICK GAME LIÊN QUÂN</Link>
-                    </h4>
-                    <p>Số lượng: 20.999</p>
-                    <p>Đã bán: 10.999</p>
-                    <div className="content__box--info-btn">
-                      <Link to="/">
-                        <img src={btnBuy} alt="" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="category-lucky__content--box col-lg-3">
-                <div className="content__box--container">
-                  <img src={categoryGame} alt="" />
-                  <div className="content__box--info">
-                    <h4>
-                      <Link to="/">NICK GAME LIÊN QUÂN</Link>
-                    </h4>
-                    <p>Số lượng: 20.999</p>
-                    <p>Đã bán: 10.999</p>
-                    <div className="content__box--info-btn">
-                      <Link to="/">
-                        <img src={btnBuy} alt="" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="category-lucky__content--box col-lg-3">
-                <div className="content__box--container">
-                  <img src={categoryGame} alt="" />
-                  <div className="content__box--info">
-                    <h4>
-                      <Link to="/">NICK GAME LIÊN QUÂN</Link>
-                    </h4>
-                    <p>Số lượng: 20.999</p>
-                    <p>Đã bán: 10.999</p>
-                    <div className="content__box--info-btn">
-                      <Link to="/">
-                        <img src={btnBuy} alt="" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  ))
+                : ''}
             </div>
           </div>
         </div>
       )}
 
-      <Notification
-        title="THÔNG BÁO"
-        content="<h2 style='color:red;font-size:20px;'>Chào mừng ae đến với SHOPNICKNSO.COM</h2><p style='font-size:18px;'>Xem mà không mua thì chỉ có lag server cút</p>"
-      />
+      <Notification title={'Thông Báo'}>
+        <div>{notification !== '' && parse(notification)}</div>
+      </Notification>
       <Link className="bonus d-none d-lg-block d-xl-block d-md-block" to="/">
         <img src={sale} alt="" />
       </Link>

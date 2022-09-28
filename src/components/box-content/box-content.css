@@ -1,0 +1,8 @@
+.content .container__content--item {
+  margin: 20px 0px;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.container__content--item .content__box {
+  padding: 15px;
+}

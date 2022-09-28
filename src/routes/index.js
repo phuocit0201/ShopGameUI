@@ -9,10 +9,12 @@ import MoneyVolatility from '~/pages/client/pages/money-volatility';
 import RechargeCard from '~/pages/client/pages/recharge-card';
 import AtmMomo from '~/pages/client/pages/atm-momo';
 import HistoryBuyAccount from '~/pages/client/pages/history-buy-account';
+import CategoryGame from '~/pages/client/pages/category-game';
 const publicRoutes = [
   { path: '/', component: Home, layout: Layout },
   { path: '/dang-nhap', component: Login, layout: Layout },
   { path: '/dang-ki', component: Register, layout: Layout },
+  { path: '/danh-muc-game/:slug', component: CategoryGame, layout: Layout },
 ];
 const authRoutesClient = [
   { path: '/admin', component: HomeAdmin, layout: Layout },

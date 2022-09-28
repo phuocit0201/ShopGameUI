@@ -16,6 +16,7 @@ function RechargeCard() {
   const dataContext = useContext(DataContext);
   const baseUrl = dataContext.baseUrl;
   const handleReload = dataContext.handleReload;
+  const loadingAuth = dataContext.loading;
   const [valueCardByTelco, setValueCardByTelco] = useState([]);
   const [listValueCard, setListValueCard] = useState([]);
   const [typeCard, setTypeCard] = useState([]);
@@ -33,7 +34,6 @@ function RechargeCard() {
   const [refresh, setRefresh] = useState(0);
   const [perPage, setPerPage] = useState(5);
   const [page, setPage] = useState(1);
-  const loadingAuth = dataContext.loading;
 
   //set số trang khi người dùng bấm chuyển trang
   const handleSetPage = (e) => {

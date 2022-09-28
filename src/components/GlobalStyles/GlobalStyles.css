@@ -17,14 +17,15 @@ html {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  /* font-family: 'Montserrat', sans-serif; */
+  font-family: roboto condensed, sans-serif;
   text-rendering: optimizeSpeed;
   color: var(--text-color);
   background: #333
     url('https://1.bp.blogspot.com/-amBoCseCz-8/VIVT9LlXs0I/AAAAAAAAOKo/ctoITA5ll00/s1600/hinh-anh-naruto-vs-sakase%2B(13).jpg');
   background-attachment: fixed;
-  color: #fff;
   background-size: 100%;
+  color: #fff;
 }
 
 button,
@@ -39,4 +40,77 @@ a[href] {
 }
 li {
   list-style: none;
+}
+
+@keyframes colorBackground {
+  0% {
+    color: #fbcf61;
+  }
+  20% {
+    color: #6bd57e;
+  }
+  40% {
+    color: #f8b9b9;
+  }
+  60% {
+    color: #57cff4;
+  }
+  80% {
+    color: #0ed4c8;
+  }
+  100% {
+    color: #fbcf61;
+  }
+}
+@-webkit-keyframes colorBackground {
+  0% {
+    background-color: #fbcf61;
+    color: #fbcf61;
+  }
+  20% {
+    background-color: #6bd57e;
+    color: #6bd57e;
+  }
+  40% {
+    background-color: #ff6f6f;
+    color: #ff6f6f;
+  }
+  60% {
+    background-color: #57cff4;
+    color: #57cff4;
+  }
+  80% {
+    background-color: #0ed4c8;
+    color: #0ed4c8;
+  }
+  100% {
+    background-color: #fbcf61;
+    color: #fbcf61;
+  }
+}
+@-moz-keyframes colorBackground {
+  0% {
+    background-color: #fbcf61;
+    color: #fbcf61;
+  }
+  20% {
+    background-color: #6bd57e;
+    color: #6bd57e;
+  }
+  40% {
+    background-color: #f5adad;
+    color: #f5adad;
+  }
+  60% {
+    background-color: #57cff4;
+    color: #57cff4;
+  }
+  80% {
+    background-color: #0ed4c8;
+    color: #0ed4c8;
+  }
+  100% {
+    background-color: #fbcf61;
+    color: #fbcf61;
+  }
 }
