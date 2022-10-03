@@ -1,0 +1,40 @@
+.nav__field--search {
+  padding-bottom: 10px;
+}
+
+.nav__field--search .field__search {
+  display: flex;
+  margin: 0;
+}
+
+.nav__field--search .field__search span {
+  padding: 4px 8px;
+  color: #0ff;
+  border-top: 1px solid;
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.nav__field--search .field__search select {
+  background: none;
+  padding-left: 4px;
+  color: #0ff;
+  border: 1px solid;
+  flex-grow: 1;
+}
+
+.nav__field--search .field__search select:focus-visible {
+  outline: none;
+}
+
+.nav__field--search .field__search option {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.container__search {
+  padding-bottom: 20px;
+}
+
+.container__search button {
+  margin-right: 20px;
+}

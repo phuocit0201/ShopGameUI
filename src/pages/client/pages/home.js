@@ -18,6 +18,7 @@ function Home() {
   const handleGoToTop = dataContext.handleGoToTop;
   const baseUrl = dataContext.baseUrl;
   const handleGetValueSetting = dataContext.handleGetValueSetting;
+  const handleReload = dataContext.handleReload;
   const [notification, setNotification] = useState('');
   const loadingSystem = dataContext.loading;
   const [categoryGameList, setCategoryGame] = useState([]);
@@ -151,7 +152,7 @@ function Home() {
                           <p>Số lượng: 20.999</p>
                           <p>Đã bán: 10.999</p>
                           <div className="content__box--info-btn">
-                            <Link to={'/danh-muc-game/' + item.slug}>
+                            <Link to={'/danh-muc-game/' + item.slug} onClick={handleReload}>
                               <img src={btnBuy} alt="" />
                             </Link>
                           </div>
