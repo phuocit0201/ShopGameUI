@@ -27,7 +27,7 @@ function Home() {
     handleGoToTop();
   }, []);
   useEffect(() => {
-    if (loadingSystem === false) {
+    if ((loadingSystem === false) & (loadingData === true)) {
       API.get(baseUrl + 'categories/index?page=1&per_page=10')
         .then((res) => {
           setCategoryGame(res.data.data);

@@ -18,13 +18,50 @@ function CategoryGame() {
   const [loadingPage, setLoadingPage] = useState(true);
   const [listAccount, setListAccount] = useState([{ data: [] }]);
   const [page, setPage] = useState(1);
-  const [perPage] = useState(10);
+  const [perPage] = useState(24);
   const [search, setSearch] = useState({
     class: '',
     sale_price: '',
     family: '',
     server_game: '',
   });
+
+  const handleSetPage = (e) => {
+    setPage(parseInt(e.target.textContent));
+    if (parseInt(e.target.textContent) !== page) {
+      setLoadingPage(true);
+      handleReload();
+    }
+  };
+  //tăng số trang lên 1 khi người dùng bấm next
+  const handleNextPage = () => {
+    if (page > 0 && page < listAccount.last_page) {
+      handleReload();
+      setLoadingPage(true);
+      setPage(parseInt(page) + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      handleReload();
+      setLoadingPage(true);
+      setPage(page - 1);
+    }
+  };
+
+  const handleFirstPage = () => {
+    handleReload();
+    setLoadingPage(true);
+    setPage(1);
+  };
+
+  const handleLastPage = () => {
+    handleReload();
+    setLoadingPage(true);
+    setPage(1);
+  };
+
   const handleGetAcountGame = () => {
     $.ajax({
       url:
@@ -43,6 +80,12 @@ function CategoryGame() {
       });
   };
 
+  const handleSearch = () => {
+    handleReload();
+    setLoadingPage(true);
+    setPage(1);
+  };
+
   useEffect(() => {
     if (loadingSystem === false) {
       handleGetAcountGame();
@@ -51,7 +94,7 @@ function CategoryGame() {
 
   useEffect(() => {
     handleGoToTop();
-  }, []);
+  }, [page]);
 
   return loadingPage ? (
     <Loading />
@@ -111,18 +154,75 @@ function CategoryGame() {
         </div>
       </div>
       <div className="container__search">
-        <button onClick={handleGetAcountGame} className="btn btn-primary">
+        <button onClick={handleSearch} className="btn btn-primary">
           Tìm Kiếm
         </button>
         <button className="btn btn-danger">Tất Cả</button>
       </div>
       <div className="content__box--category-game row">
         {listAccount.data.map((item, index) => (
-          <div key={index} className="col-xl-3 col-lg-4 col-md-6">
+          <div key={index} className="col-xl-3 col-lg-4 col-md-6 box__item--account">
             <ItemGame data={item} />
           </div>
         ))}
       </div>
+      {listAccount.last_page > 1 && (
+        <nav aria-label="Page navigation example">
+          <ul className="pagination pagination__list--account-game">
+            <li className="page-item page-after">
+              <button onClick={handlePreviousPage}>Trước</button>
+            </li>
+
+            {page - 3 > 1 && (
+              <li className="page-item page-after">
+                <button onClick={handleFirstPage}>1</button>
+              </li>
+            )}
+            {page - 3 > 1 && (
+              <li className="page-item btn-disabled">
+                <button disabled className="page-link paginate-disabled">
+                  ...
+                </button>
+              </li>
+            )}
+            {listAccount.links.map(
+              (item, index) =>
+                index !== 0 &&
+                index !== listAccount.links.length - 1 &&
+                index >= page - 3 &&
+                index <= page + 3 && (
+                  <li key={index} className="page-item">
+                    <button
+                      onClick={(e) => handleSetPage(e)}
+                      className={item.active ? 'page-link active' : 'page-link'}
+                    >
+                      {item.label}
+                    </button>
+                  </li>
+                ),
+            )}
+
+            {page + 3 < listAccount.last_page && (
+              <li className="page-item btn-disabled">
+                <button disabled className="page-link paginate-disabled">
+                  ...
+                </button>
+              </li>
+            )}
+
+            {page + 3 < listAccount.last_page && (
+              <li className="page-item">
+                <button className="page-link" onClick={(e) => handleSetPage(e)}>
+                  {listAccount.last_page}
+                </button>
+              </li>
+            )}
+            <li className="page-item page-next">
+              <button onClick={handleNextPage}>Tiếp theo</button>
+            </li>
+          </ul>
+        </nav>
+      )}
     </BoxContent>
   );
 }

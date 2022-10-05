@@ -203,7 +203,7 @@ function RechargeCard() {
             <div className="recharge__card-content row">
               <div className="content__box--input col-xl-3 col-lg-3 col-md-6 col-sm-12">
                 <label htmlFor="">Loại Thẻ</label>
-                <select value={telco} onChange={(e) => setTelco(e.target.value)}>
+                <select className="content__box--input-telco" value={telco} onChange={(e) => setTelco(e.target.value)}>
                   {typeCard.map((item, index) => (
                     <option key={index} value={item}>
                       {item}
@@ -213,7 +213,13 @@ function RechargeCard() {
               </div>
               <div className="content__box--input col-xl-3 col-lg-3 col-md-6 col-sm-12">
                 <label htmlFor="">Mệnh Giá</label>
-                <select value={declareValue} onChange={(e) => setDeclareValue(e.target.value)} name="" id="">
+                <select
+                  className="content__box--input-value"
+                  value={declareValue}
+                  onChange={(e) => setDeclareValue(e.target.value)}
+                  name=""
+                  id=""
+                >
                   <option value="0">Chọn mệnh giá</option>
                   {valueCardByTelco.map((item, index) => (
                     <option key={index} value={item.value}>

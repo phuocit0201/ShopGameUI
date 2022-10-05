@@ -38,3 +38,17 @@
 .container__search button {
   margin-right: 20px;
 }
+
+.box__item--account {
+  margin-bottom: 12px;
+}
+
+.pagination__list--account-game {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-disabled .paginate-disabled:hover {
+  cursor: not-allowed;
+  color: #0ff;
+}

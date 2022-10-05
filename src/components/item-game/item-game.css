@@ -50,3 +50,9 @@
   border: 2px solid #ff06fa;
   box-shadow: 0px 0px 15px #da77f9;
 }
+
+@media screen and (max-width: 768px) {
+  .container__item--game .item__game--img {
+    height: auto;
+  }
+}

@@ -1,5 +1,6 @@
 import './item-game.css';
 import avatar from '~/asset/client/images/avatar-game/1.png';
+import { Link } from 'react-router-dom';
 function ItemGame({ data }) {
   return (
     <div className="container__item--game">
@@ -23,10 +24,12 @@ function ItemGame({ data }) {
         </div>
         <div className="item__game--info-bottom row">
           <div className="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6 text-center">
-            <span>200,000đ</span>
+            <span>{new Intl.NumberFormat().format(data.sale_price)}đ</span>
           </div>
           <div className="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6 text-center">
-            <button className="btn btn-info">Chi Tiết</button>
+            <Link className="btn btn-info" to={`/chi-tiet/${data.id}`}>
+              Chi Tiết
+            </Link>
           </div>
         </div>
       </div>
