@@ -1,22 +1,30 @@
 import LayoutSystem from '../components/layout-system';
 import '~/asset/client/css/profile.css';
 import { DataContext } from '~/contexts/DataContext';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Loading } from '~/components/loading';
 import moment from 'moment/moment';
 function Profile() {
   const title = 'THÔNG TIN TÀI KHOẢN';
   document.title = title;
   const dataContext = useContext(DataContext);
-  const loading = dataContext.loading;
+  const loadingSystem = dataContext.loading;
+  const [loadingPage, setLoadingPage] = useState(true);
   const data = dataContext.data;
   const handleGoToTop = dataContext.handleGoToTop;
+
   useEffect(() => {
     handleGoToTop();
   }, []);
+
+  useEffect(() => {
+    if (loadingSystem === false) {
+      setLoadingPage(false);
+    }
+  }, [loadingSystem]);
   return (
     <LayoutSystem title={title}>
-      {loading ? (
+      {loadingPage ? (
         <Loading />
       ) : (
         <table className="table profile">

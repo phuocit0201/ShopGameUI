@@ -145,3 +145,10 @@
 }
 
 /*------------------------------------------NOTIFICATION--------------------------------------*/
+.notification__content--title h3,
+.notification__box--content {
+  animation: colorBackground 5s infinite;
+  -webkit-animation: colorBackground 5s infinite;
+  -moz-animation: colorBackground 5s infinite;
+  -o-animation: colorBackground 5s infinite;
+}

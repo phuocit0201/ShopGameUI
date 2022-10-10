@@ -1,11 +1,16 @@
 import './item-game.css';
 import avatar from '~/asset/client/images/avatar-game/1.png';
 import { Link } from 'react-router-dom';
+import { DataContext } from '~/contexts/DataContext';
+import { useContext } from 'react';
 function ItemGame({ data }) {
+  const dataContext = useContext(DataContext);
+  const handleReload = dataContext.handleReload;
+
   return (
     <div className="container__item--game">
       <div className="item__game--img">
-        <img src={avatar} alt="" />
+        <img src={data.avatar} alt="" />
       </div>
       <div className="item__game--info">
         <div className="item__game--info-top row">
@@ -27,7 +32,7 @@ function ItemGame({ data }) {
             <span>{new Intl.NumberFormat().format(data.sale_price)}đ</span>
           </div>
           <div className="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6 text-center">
-            <Link className="btn btn-info" to={`/chi-tiet/${data.id}`}>
+            <Link onClick={handleReload} className="btn btn-info" to={`/chi-tiet/${data.id}`}>
               Chi Tiết
             </Link>
           </div>

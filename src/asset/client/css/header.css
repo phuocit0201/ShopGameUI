@@ -152,7 +152,7 @@
   }
 
   .header .header-content .nav-menu {
-    width: 550px;
+    min-width: 650px;
     height: 67px;
   }
   .header .header-content .nav-menu .nav-menu__content li {

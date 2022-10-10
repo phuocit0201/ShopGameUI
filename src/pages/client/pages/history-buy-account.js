@@ -150,7 +150,11 @@ function HistoryBuyAccount() {
                     <td className="text-info">{new Intl.NumberFormat().format(item.price)}</td>
                     <td>{moment(item.created_at).utc().format('H:m:s DD-MM-YYYY')}</td>
                     <td>
-                      <button idaccount={item.id} onClick={(e) => handleShowaAccount(e)} className="btn btn-info">
+                      <button
+                        idaccount={item.account_id}
+                        onClick={(e) => handleShowaAccount(e)}
+                        className="btn btn-info"
+                      >
                         <i className="fas fa-eye"></i> Chi Tiết
                       </button>
                     </td>
@@ -198,8 +202,24 @@ function HistoryBuyAccount() {
         <table className="table show__detail--account">
           <thead>
             <tr>
-              <th scope="col">Id:</th>
+              <th scope="col">Mã số:</th>
               <th scope="col">{showAccount.id}</th>
+            </tr>
+            <tr>
+              <th scope="col">Server:</th>
+              <th scope="col">{showAccount.server_game}</th>
+            </tr>
+            <tr>
+              <th scope="col">Phái:</th>
+              <th scope="col">{showAccount.class}</th>
+            </tr>
+            <tr>
+              <th scope="col">TGTT:</th>
+              <th scope="col">{showAccount.family ? 'Có' : 'Không'}</th>
+            </tr>
+            <tr>
+              <th scope="col">Giá Mua:</th>
+              <th scope="col">{new Intl.NumberFormat().format(showAccount.sale_price)} VNĐ</th>
             </tr>
             <tr>
               <th scope="col">Tài Khoản:</th>
@@ -208,10 +228,6 @@ function HistoryBuyAccount() {
             <tr>
               <th scope="col">Mật Khẩu:</th>
               <th scope="col">{showAccount.password}</th>
-            </tr>
-            <tr>
-              <th scope="col">Giá Mua:</th>
-              <th scope="col">{new Intl.NumberFormat().format(showAccount.sale_price)} VNĐ</th>
             </tr>
           </thead>
         </table>

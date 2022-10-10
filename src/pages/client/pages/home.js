@@ -26,29 +26,31 @@ function Home() {
   useEffect(() => {
     handleGoToTop();
   }, []);
-  useEffect(() => {
-    if ((loadingSystem === false) & (loadingData === true)) {
-      API.get(baseUrl + 'categories/index?page=1&per_page=10')
-        .then((res) => {
-          setCategoryGame(res.data.data);
-          setLoadingData(false);
-        })
-        .catch(() => {});
-    }
 
+  useEffect(() => {
+    if (loadingSystem === false) {
+      API.get(baseUrl + 'categories/index?page=1&per_page=10').then((res) => {
+        setCategoryGame(res.data.data);
+        setLoadingData(false);
+      });
+    }
+  }, [loadingSystem]);
+
+  useEffect(() => {
     if (loadingData === false) {
       setNotification(handleGetValueSetting('notification'));
       $('.notification').css({ opacity: 1, 'pointer-events': 'unset' });
       $('#notification').css({ transform: 'unset', transition: 'all 0.25s linear' });
     }
-  }, [loadingData, loadingSystem]);
+  }, [loadingData]);
+
   return (
     <div className="content container">
       <div className="content__banner--container">
         <div className="content__banner row">
           <div className="content__banner--left col-lg-4">
             <div className="content__banner--left-box">
-              <h3>TOP NẠP THẺ THÁNG 9</h3>
+              <h3>TOP NẠP THÁNG 9</h3>
               <ul className="banner__left--top">
                 <li>
                   <i>1</i>
@@ -71,26 +73,15 @@ function Home() {
                     9.550.000<sup>đ</sup>
                   </label>
                 </li>
-                <li>
-                  <i>4</i>
-                  <span>phuoc***</span>
-                  <label htmlFor="">
-                    9.550.000<sup>đ</sup>
-                  </label>
-                </li>
-                <li>
-                  <i>5</i>
-                  <span>phuoc***</span>
-                  <label htmlFor="">
-                    9.550.000<sup>đ</sup>
-                  </label>
-                </li>
               </ul>
             </div>
           </div>
           <div className="content__banner--right col-lg-8">
             <div className="banner__right--img">
-              <img src={team} alt="" />
+              <img
+                src="https://shopnsocan.com/storage/main/images/image%20giao%20di%E1%BB%87n/rfRHFeBEOV_7466060662.gif"
+                alt=""
+              />
             </div>
           </div>
         </div>

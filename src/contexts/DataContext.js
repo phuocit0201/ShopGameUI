@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import $ from 'jquery';
+import { useNavigate } from 'react-router-dom';
 export const DataContext = createContext();
 function DataContextProvider({ children }) {
   const [data, setData] = useState([]);
@@ -10,6 +11,7 @@ function DataContextProvider({ children }) {
   const [loadingSetting, setLoadingSetting] = useState(true);
   const [settingWebsite, setSettingWebsite] = useState([]);
   const baseUrl = 'http://localhost/ShopGame/public/api/v1/';
+
   const handleGoToTop = () => {
     $('html, body').animate({ scrollTop: 0 }, 0);
   };

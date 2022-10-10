@@ -42,8 +42,11 @@ function Register() {
             position: 'center',
             icon: 'success',
             title: 'Đăng Kí Thành Công',
+            color: '#28a745',
             showConfirmButton: false,
             timer: 1500,
+            background: 'rgba(0, 0, 0, 0.8)',
+            backdrop: false,
           });
           setTimeout(() => {
             navigate('/dang-nhap');

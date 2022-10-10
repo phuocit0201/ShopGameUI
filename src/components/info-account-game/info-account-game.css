@@ -3,3 +3,76 @@
   flex-direction: column;
   align-items: center;
 }
+
+.detail__acount-buy--left .id-account {
+  color: #0ff;
+}
+
+.detail__acount-buy--left .price-account {
+  color: #32c5d2;
+}
+
+.detail__acount-buy--left,
+.detail__acount-buy--left button {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.detail__acount-buy--right div p {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 550;
+  color: #0ff;
+}
+
+.detail__acount-buy--right div p span {
+  color: #32c5d2;
+}
+
+.detail__account-imgs--show {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.detail__account-imgs--show .account__imgs-box {
+  max-width: 790px;
+  position: relative;
+}
+
+.detail__account-imgs--show .account__imgs-box img {
+  width: 100%;
+}
+
+.detail__account-imgs--show .account__imgs-box div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 35px;
+}
+
+.detail__account-imgs--show .account__imgs-box div i:hover {
+  color: #0ff;
+  cursor: pointer;
+}
+
+.account__imgs-circle i {
+  margin-right: 4px;
+}
+
+.detail__acount-buy--left .name-game {
+  animation: colorBackground 2s infinite;
+  -webkit-animation: colorBackground 2s infinite;
+  -moz-animation: colorBackground 2s infinite;
+  -o-animation: colorBackground 2s infinite;
+}
+
+.error {
+  font-weight: 600;
+}

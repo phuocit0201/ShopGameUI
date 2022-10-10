@@ -84,7 +84,8 @@ function Header() {
             <li>
               {dataContext ? (
                 <NavLink onClick={handleReload} className="right" to="/thong-tin-tai-khoan">
-                  <i className="far fa-user"></i> {dataContext.name}
+                  <i style={{ paddingRight: 5 }} className="far fa-user"></i>
+                  {dataContext.username} - $ {new Intl.NumberFormat().format(dataContext.money)}
                 </NavLink>
               ) : (
                 <NavLink className="right" to="/dang-nhap">

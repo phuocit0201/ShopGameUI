@@ -34,6 +34,7 @@ input,
   outline: none;
   border: none;
 }
+
 a[href] {
   color: var(--tex-color);
   text-decoration: none;
