@@ -1,5 +1,4 @@
 import './item-game.css';
-import avatar from '~/asset/client/images/avatar-game/1.png';
 import { Link } from 'react-router-dom';
 import { DataContext } from '~/contexts/DataContext';
 import { useContext } from 'react';

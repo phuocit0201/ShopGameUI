@@ -7,6 +7,7 @@ import { DataContext } from '~/contexts/DataContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment/moment';
 import Swal from 'sweetalert2';
+import ItemGame from '~/components/item-game';
 const images = [
   'https://shopnsocan.com/images/u6P7cKPhLePrhxECCaz2MxnLap3NVwzi.jpg',
   'https://shopnsocan.com/images/1dTozFCl2KuZN7SAjI9UcHi4qRi7Bqem.jpg',
@@ -119,7 +120,8 @@ function InfoAccountGame() {
 
   useEffect(() => {
     handleGoToTop();
-  }, []);
+    setLoadingPage(true);
+  }, [id]);
   return loadingPage ? (
     <Loading />
   ) : (
@@ -128,8 +130,8 @@ function InfoAccountGame() {
         <div className="col-xl-3 col-lg-3">
           <div className="detail__acount-buy--left">
             <p className="name-game">NINJASCHOOL</p>
-            <p className="id-account">MÃ SỐ {infoAccount.id}</p>
-            <p className="price-account"> {new Intl.NumberFormat().format(infoAccount.sale_price)} ATM</p>
+            <p className="id-account">MÃ SỐ {infoAccount.info.id}</p>
+            <p className="price-account"> {new Intl.NumberFormat().format(infoAccount.info.sale_price)} ATM</p>
             <button className="btn btn-success" onClick={hanldBuyAccount}>
               MUA NGAY
             </button>
@@ -138,10 +140,10 @@ function InfoAccountGame() {
         <div className="col-xl-9 col-lg-9 detail__acount-buy--right row">
           <div className="col-6">
             <p>
-              PHÁI: <span>{infoAccount.class}</span>
+              PHÁI: <span>{infoAccount.info.class}</span>
             </p>
             <p>
-              CẤP ĐỘ: <span>{infoAccount.level}</span>
+              CẤP ĐỘ: <span>{infoAccount.info.level}</span>
             </p>
             <p>
               TRẠNG THÁI: <span>CHƯA BÁN</span>
@@ -149,18 +151,18 @@ function InfoAccountGame() {
           </div>
           <div className="col-6">
             <p>
-              SERVER: <span>{infoAccount.server_game}</span>
+              SERVER: <span>{infoAccount.info.server_game}</span>
             </p>
             <p>
-              TTGT: <span>{infoAccount.family ? 'Có' : 'Không'}</span>
+              TTGT: <span>{infoAccount.info.family ? 'Có' : 'Không'}</span>
             </p>
             <p>
-              NGÀY ĐĂNG: <span>{moment(infoAccount.created_at).utc().format('DD-MM-YYYY')}</span>
+              NGÀY ĐĂNG: <span>{moment(infoAccount.info.created_at).utc().format('DD-MM-YYYY')}</span>
             </p>
           </div>
           <div className="col-12">
             <p>
-              NỖI BẬT: <span>{infoAccount.description}</span>
+              NỖI BẬT: <span>{infoAccount.info.description}</span>
             </p>
           </div>
         </div>
@@ -168,14 +170,14 @@ function InfoAccountGame() {
       <div className="content__detail-account--imgs row">
         <div className="detail__account-imgs--show col-12">
           <div className="account__imgs-box">
-            <img src={images[indexSlider]} alt="" />
+            <img src={infoAccount.imgs[indexSlider]} alt="" />
             <div>
               <i className="fas fa-chevron-left" onClick={hanledPriveSlider}></i>
               <i className="fas fa-chevron-right" onClick={hanledNextSlider}></i>
             </div>
           </div>
           <div className="account__imgs-circle">
-            {images.map((item, index) =>
+            {infoAccount.imgs.map((item, index) =>
               index === indexSlider ? (
                 <i key={index} className="fas fa-circle" style={{ color: '#0ff' }}></i>
               ) : (
@@ -185,34 +187,46 @@ function InfoAccountGame() {
           </div>
         </div>
       </div>
+      <div className="category-lucky__content--title col-sm-12">
+        <h2 className="text-center">NICK LIÊN QUAN</h2>
+        <span></span>
+      </div>
+      <div className="related__account row">
+        {infoAccount.related.map((item, index) => (
+          <div key={index} className="col-xl-3 col-lg-4 col-md-6 box__item--account">
+            <ItemGame data={item} />
+          </div>
+        ))}
+      </div>
+
       <Notification title={'Xác Nhận Thanh Toán'}>
         <table className="table show__detail--account">
           <thead>
             <tr>
               <th scope="col">Mã số:</th>
-              <th scope="col">{infoAccount.id}</th>
+              <th scope="col">{infoAccount.info.id}</th>
             </tr>
             <tr>
               <th scope="col">Cấp độ:</th>
-              <th scope="col">{infoAccount.level}</th>
+              <th scope="col">{infoAccount.info.level}</th>
             </tr>
             <tr>
               <th scope="col">Server:</th>
-              <th scope="col">{infoAccount.server_game}</th>
+              <th scope="col">{infoAccount.info.server_game}</th>
             </tr>
             <tr>
               <th scope="col">TTGT:</th>
-              <th scope="col">{infoAccount.family ? 'Có' : 'Không'}</th>
+              <th scope="col">{infoAccount.info.family ? 'Có' : 'Không'}</th>
             </tr>
             <tr>
               <th scope="col">Giá Mua:</th>
-              <th scope="col">{new Intl.NumberFormat().format(infoAccount.sale_price)} VNĐ</th>
+              <th scope="col">{new Intl.NumberFormat().format(infoAccount.info.sale_price)} VNĐ</th>
             </tr>
           </thead>
         </table>
         {!isLogin && <p className="text-center error">Vui lòng đăng nhập để thanh toán</p>}
 
-        {isLogin && parseInt(infoUser.money) < parseInt(infoAccount.sale_price) && (
+        {isLogin && parseInt(infoUser.money) < parseInt(infoAccount.info.sale_price) && (
           <p className="text-center error">Bạn không đủ tiền vui lòng nạp thêm</p>
         )}
 
@@ -221,12 +235,12 @@ function InfoAccountGame() {
             Đăng nhập
           </button>
         )}
-        {isLogin && parseInt(infoUser.money) >= parseInt(infoAccount.sale_price) && (
+        {isLogin && parseInt(infoUser.money) >= parseInt(infoAccount.info.sale_price) && (
           <button className="btn btn-info" onClick={handlePay}>
             Thanh Toán
           </button>
         )}
-        {isLogin && parseInt(infoUser.money) < parseInt(infoAccount.sale_price) && (
+        {isLogin && parseInt(infoUser.money) < parseInt(infoAccount.info.sale_price) && (
           <button className="btn btn-info" onClick={locationReCharge}>
             Nạp Tiền
           </button>

@@ -100,10 +100,10 @@ function Home() {
                 ? categoryGameList.map((item, index) => (
                     <div key={index} className="category-lucky__content--box col-sm-6 col-md-4 col-lg-3 col-xl-3">
                       <div className="content__box--container">
-                        <img src={item.img} alt="" />
+                        <img src="http://localhost/ShopGame/asset/lucky/lucky.gif" alt="" />
                         <div className="content__box--info">
                           <h4>
-                            <Link to="/">{item.name}</Link>
+                            <Link to="/">Vòng Quay 20K</Link>
                           </h4>
                           {/* <p>Đã quay: {item.number}</p> */}
                           <p>Đã quay: 300</p>
@@ -141,7 +141,7 @@ function Home() {
                             <Link to="/">{item.name}</Link>
                           </h4>
                           <p>Số lượng: 20.999</p>
-                          <p>Đã bán: 10.999</p>
+                          <p style={{ margin: 'unset' }}>Đã bán: 10.999</p>
                           <div className="content__box--info-btn">
                             <Link to={'/danh-muc-game/' + item.slug} onClick={handleReload}>
                               <img src={btnBuy} alt="" />
