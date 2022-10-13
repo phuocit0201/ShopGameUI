@@ -22,6 +22,7 @@ function Home() {
   const [notification, setNotification] = useState('');
   const loadingSystem = dataContext.loading;
   const [categoryGameList, setCategoryGame] = useState([]);
+  const [luckyList, setLuckyList] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   useEffect(() => {
     handleGoToTop();
@@ -31,6 +32,9 @@ function Home() {
     if (loadingSystem === false) {
       API.get(baseUrl + 'categories/index?page=1&per_page=10').then((res) => {
         setCategoryGame(res.data.data);
+      });
+      API.get(baseUrl + 'rotation-luck/index').then((res) => {
+        setLuckyList(res.data.data);
         setLoadingData(false);
       });
     }
@@ -96,14 +100,14 @@ function Home() {
                 <h2 className="text-center">DANH MỤC VÒNG QUAY</h2>
                 <span></span>
               </div>
-              {categoryGameList
-                ? categoryGameList.map((item, index) => (
+              {luckyList
+                ? luckyList.map((item, index) => (
                     <div key={index} className="category-lucky__content--box col-sm-6 col-md-4 col-lg-3 col-xl-3">
                       <div className="content__box--container">
-                        <img src="http://localhost/ShopGame/asset/lucky/lucky.gif" alt="" />
+                        <img src={item.img} alt="" />
                         <div className="content__box--info">
                           <h4>
-                            <Link to="/">Vòng Quay 20K</Link>
+                            <Link to="/">{item.rotation_name}</Link>
                           </h4>
                           {/* <p>Đã quay: {item.number}</p> */}
                           <p>Đã quay: 300</p>
@@ -114,7 +118,7 @@ function Home() {
                             <span>20.000đ</span>
                           </div>
                           <div className="content__box--info-btn">
-                            <Link to="/">
+                            <Link to={`/vong-quay-may-man/${item.slug}`}>
                               <img src={btn} alt="" />
                             </Link>
                           </div>

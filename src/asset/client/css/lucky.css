@@ -1,0 +1,80 @@
+.wrapper__lucky .category-lucky__content--title {
+  padding-bottom: 10px;
+}
+
+.wrapper__lucky .category-lucky__content--title h2:last-child {
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  background: #3d9d1e;
+}
+
+.wrapper__lucky--content-rotato {
+  padding-bottom: 20px;
+}
+
+.wrapper__lucky--content-rotato .lucky__content--rotato-img {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper__lucky--content-rotato .lucky__content--rotato-img .rotato {
+  width: 100%;
+}
+
+.wrapper__lucky--content-rotato .lucky__content--rotato-img .btn-rotato {
+  position: absolute;
+  width: 15%;
+}
+
+.wrapper__lucky--content-rotato .lucky__content--rotato-img .btn-rotato:hover {
+  cursor: pointer;
+  filter: brightness(130%);
+}
+
+.lucky__content--history-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+  margin-top: 20px;
+  color: #0ff;
+}
+
+.lucky__content--history-header a {
+  padding: 6px 12px;
+  border-radius: 5px;
+  background: #0dcaf0;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.lucky__content--history-header a:hover {
+  color: #0ff;
+}
+
+.lucky__content--history-header table {
+  color: #ffffff;
+  margin-top: 10px;
+  border: 2px solid #ffffff;
+}
+
+.lucky__content--history-header table tbody {
+  animation: colorBackground 5s infinite;
+  -webkit-animation: colorBackground 5s infinite;
+  -moz-animation: colorBackground 5s infinite;
+  -o-animation: colorBackground 5s infinite;
+}
+
+.lucky__content--history-header table thead tr th {
+  background-color: #339214;
+  vertical-align: middle;
+}
+
+.lucky__content--history-header table tbody tr td {
+  vertical-align: middle;
+}

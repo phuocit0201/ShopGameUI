@@ -20,24 +20,30 @@ function DataContextProvider({ children }) {
     setLoading(true);
   };
 
-  const handleGetMe = async () => {
+  const handleGetMe = () => {
     if (localStorage.getItem('access_token') !== null) {
-      await $.post(
-        baseUrl + 'users/get-me',
-        {
+      $.ajax({
+        url: baseUrl + 'users/get-me',
+        type: 'POST',
+        data: {
           token: localStorage.getItem('access_token'),
         },
-        (res) => {
+      })
+        .done((res) => {
           setLoadingGetMe(false);
           setIsLogin(true);
           setData(res);
-        },
-      ).catch(() => {
-        setIsLogin(false);
-        setLoadingGetMe(false);
-        localStorage.removeItem('access_token');
-        setData(null);
-      });
+        })
+        .fail((err) => {
+          if (err.status === 403) {
+            setIsLogin(false);
+            setLoadingGetMe(false);
+            localStorage.removeItem('access_token');
+            setData(null);
+          } else if (err.status === 500) {
+            handleReload();
+          }
+        });
     } else {
       setLoadingGetMe(false);
       setData(null);
