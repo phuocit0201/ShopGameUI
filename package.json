@@ -10,6 +10,7 @@
     "bootstrap": "^5.2.0",
     "customize-cra": "^1.0.0",
     "html-react-parser": "^3.0.4",
+    "javascript-time-ago": "^2.5.7",
     "jquery": "^3.6.1",
     "moment": "^2.29.4",
     "pusher": "^5.1.1-beta",
@@ -20,6 +21,7 @@
     "react-flatpickr": "^3.10.13",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-time-ago": "^7.2.1",
     "sweetalert2": "^11.4.33",
     "web-vitals": "^2.1.4"
   },

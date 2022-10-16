@@ -1,67 +1,82 @@
+import '~/asset/client/css/history-buy-account.css';
 import LayoutSystem from '../components/layout-system';
-import '~/asset/client/css/money-volatility.css';
-import { useContext, useEffect, useState } from 'react';
 import { DataContext } from '~/contexts/DataContext';
+import { useContext, useEffect, useState } from 'react';
 import { Loading } from '~/components/loading';
 import $ from 'jquery';
-import moment from 'moment/moment';
-import Flatpickr from 'react-flatpickr';
-import 'flatpickr/dist/themes/dark.css';
-function MoneyVolatility() {
-  const title = 'BIẾN ĐỘNG SỐ DƯ';
+function HistoryRotation() {
+  const title = 'LỊCH SỬ VÒNG QUAY';
   document.title = title;
   const dataContext = useContext(DataContext);
-  const loadingAuth = dataContext.loading;
-  const handleReload = dataContext.handleReload;
   const baseUrl = dataContext.baseUrl;
-  const [loadingData, setLoadingData] = useState(true);
-  const [moneyVolatility, setMoneyVolatility] = useState();
+  const handleReload = dataContext.handleReload;
+  const loadingAuth = dataContext.loading;
+  const [loading, setLoading] = useState(true);
+  const [loadingHistoty, setLoadingHistory] = useState(true);
+  const [history, setHistory] = useState([]);
   const [perPage, setPerPage] = useState(5);
   const [page, setPage] = useState(1);
-  const [date, setDate] = useState(new Date());
+
   const handleSetPage = (e) => {
     setPage(e.target.textContent);
   };
+
   const handleNextPage = () => {
-    if (page > 0 && page < moneyVolatility.last_page) {
+    if (page > 0 && page < history.last_page) {
       setPage(parseInt(page) + 1);
     }
   };
+
   const handlePreviousPage = () => {
     if (page > 1) {
       setPage(page - 1);
     }
   };
+
   const handleSetPerPage = (e) => {
     setPerPage(e.target.value);
     setPage(1);
   };
-  useEffect(() => {
-    const handleMoneyVolatility = async () => {
-      await $.get(
-        baseUrl + 'trans-history/get-by-user?per_page=' + perPage + '&page=' + page,
-        { token: localStorage.getItem('access_token') },
-        (response) => {
-          if (response.data.data) {
-            setMoneyVolatility(response.data);
-          }
-          setLoadingData(false);
-        },
-      ).catch((err) => {
-        if (err.responseJSON.status === false) {
+
+  const handleGetHistory = () => {
+    $.ajax({
+      url: baseUrl + `rotation-luck/get-history-by-user?page=${page}&per_page=${perPage}`,
+      type: 'GET',
+      data: {
+        token: localStorage.getItem('access_token'),
+      },
+    })
+      .done((response) => {
+        if (response.data.data) {
+          setHistory(response.data);
+        }
+        setLoadingHistory(false);
+      })
+      .fail((response) => {
+        if (response.status === 403) {
           localStorage.removeItem('access_token');
           handleReload();
         }
-        setMoneyVolatility({ data: [] });
+        setHistory({ data: [] });
+        setLoadingHistory(false);
       });
-    };
+  };
+
+  useEffect(() => {
     if (loadingAuth === false) {
-      handleMoneyVolatility();
+      handleGetHistory();
     }
   }, [loadingAuth, perPage, page]);
+
+  useEffect(() => {
+    if (loadingHistoty === false) {
+      setLoading(false);
+    }
+  }, [loadingHistoty]);
+
   return (
     <LayoutSystem title={title}>
-      {loadingData ? (
+      {loading ? (
         <Loading />
       ) : (
         <div className="container__content--money-volatility">
@@ -75,34 +90,24 @@ function MoneyVolatility() {
                 <option value={100}>100</option>
               </select>
             </label>
-            <label htmlFor="" className="search___by-date">
-              <Flatpickr data-enable-time value={date} />
-            </label>
-            <label htmlFor="" className="search___by-date">
-              <Flatpickr data-enable-time value={date} />
-            </label>
           </div>
           <table className="table money-volatility">
             <thead>
               <tr>
-                <th scope="col">Số Tiền Trước</th>
-                <th scope="col">Số Tiền Thay Đổi</th>
-                <th scope="col">Số Tiền Sau</th>
+                <th scope="col">ID</th>
+                <th scope="col">Tên Vòng Quay</th>
+                <th scope="col">Phần Thưởng</th>
                 <th scope="col">Thời Gian</th>
-                <th scope="col">Nội Dung</th>
               </tr>
             </thead>
             <tbody>
-              {moneyVolatility.data.length !== 0 ? (
-                moneyVolatility.data.map((item) => (
+              {history.data.length !== 0 ? (
+                history.data.map((item) => (
                   <tr key={item.id}>
-                    <td className="text-primary">{new Intl.NumberFormat().format(item.after_money)}</td>
-                    <td className={item.transaction_money[0] === '-' ? 'text-danger' : 'text-success'}>
-                      {new Intl.NumberFormat().format(item.transaction_money)}
-                    </td>
-                    <td className="text-info">{new Intl.NumberFormat().format(item.befor_money)}</td>
+                    <td>{item.id}</td>
+                    <td>{item.rotation_name}</td>
+                    <td className="text-info">{new Intl.NumberFormat().format(item.coins)} xu</td>
                     <td>{item.created_at}</td>
-                    <td className="text-warning">{item.note}</td>
                   </tr>
                 ))
               ) : (
@@ -115,16 +120,16 @@ function MoneyVolatility() {
             </tbody>
           </table>
 
-          {moneyVolatility.data.length !== 0 && (
+          {history.data.length !== 0 && (
             <nav aria-label="Page navigation example pagination__recharge">
               <ul className="pagination">
                 <li className="page-item page-after">
                   <button onClick={handlePreviousPage}>Trước</button>
                 </li>
-                {moneyVolatility.links.map(
+                {history.links.map(
                   (item, index) =>
                     index !== 0 &&
-                    index !== moneyVolatility.links.length - 1 && (
+                    index !== history.links.length - 1 && (
                       <li key={index} className="page-item">
                         <button
                           onClick={(e) => handleSetPage(e)}
@@ -147,4 +152,4 @@ function MoneyVolatility() {
   );
 }
 
-export default MoneyVolatility;
+export default HistoryRotation;

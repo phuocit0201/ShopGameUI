@@ -12,6 +12,7 @@
 
 .wrapper__lucky--content-rotato {
   padding-bottom: 20px;
+  overflow: hidden;
 }
 
 .wrapper__lucky--content-rotato .lucky__content--rotato-img {

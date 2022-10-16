@@ -4,8 +4,12 @@ import { DataContext } from '~/contexts/DataContext';
 import { useContext } from 'react';
 import Pusher from 'pusher-js';
 import Swal from 'sweetalert2';
-
+import TimeAgo from 'javascript-time-ago';
+import ru from 'javascript-time-ago/locale/ru.json';
+import vn from 'javascript-time-ago/locale/en.json';
 function Layout({ children }) {
+  TimeAgo.addDefaultLocale(vn);
+  TimeAgo.addLocale(ru);
   const dataContext = useContext(DataContext);
   const infoUser = dataContext.data;
   const handleReload = dataContext.handleReload;

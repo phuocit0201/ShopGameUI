@@ -53,8 +53,8 @@ function LayoutSystem({ children, title }) {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">
-                    <i className="fas fa-history"></i> LỊCH SỬ DỊCH VỤ
+                  <NavLink to="/lich-su-vong-quay">
+                    <i className="fas fa-history"></i> LỊCH SỬ VÒNG QUAY
                   </NavLink>
                 </li>
               </ul>

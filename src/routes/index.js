@@ -12,6 +12,7 @@ import HistoryBuyAccount from '~/pages/client/pages/history-buy-account';
 import CategoryGame from '~/pages/client/pages/category-game';
 import AccountDetail from '~/pages/client/pages/account-detail';
 import Lucky from '~/pages/client/pages/lucky';
+import HistoryRotation from '~/pages/client/pages/history-rotaion';
 const publicRoutes = [
   { path: '/', component: Home, layout: Layout },
   { path: '/dang-nhap', component: Login, layout: Layout },
@@ -28,7 +29,7 @@ const authRoutesClient = [
   { path: '/nap-the', component: RechargeCard, layout: Layout },
   { path: '/nap-tien-qua-ngan-hang', component: AtmMomo, layout: Layout },
   { path: '/lich-su-mua-nick', component: HistoryBuyAccount, layout: Layout },
-  { path: '/lich-su-vong-quay', component: HistoryBuyAccount, layout: Layout },
+  { path: '/lich-su-vong-quay', component: HistoryRotation, layout: Layout },
 ];
 
 export { authRoutesClient, publicRoutes };

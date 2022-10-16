@@ -118,7 +118,7 @@ function Home() {
                             <span>20.000đ</span>
                           </div>
                           <div className="content__box--info-btn">
-                            <Link to={`/vong-quay-may-man/${item.slug}`}>
+                            <Link to={`/vong-quay-may-man/${item.slug}`} onClick={handleReload}>
                               <img src={btn} alt="" />
                             </Link>
                           </div>

@@ -53,7 +53,7 @@ function Profile() {
             </tr>
             <tr>
               <th scope="col">NGÀY THAM GIA</th>
-              <th scope="col">{moment(data.created_at).utc().format('H:m:s DD-MM-YYYY')}</th>
+              <th scope="col">{moment(data.created_at).utc('00:07').format('H:m:s DD-MM-YYYY')}</th>
             </tr>
           </thead>
         </table>
