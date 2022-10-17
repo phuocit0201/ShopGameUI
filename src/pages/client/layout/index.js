@@ -1,47 +1,55 @@
 import Header from './header';
 import Footer from './footer';
 import { DataContext } from '~/contexts/DataContext';
-import { useContext } from 'react';
-import Pusher from 'pusher-js';
+import { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import TimeAgo from 'javascript-time-ago';
-import ru from 'javascript-time-ago/locale/ru.json';
-import vn from 'javascript-time-ago/locale/en.json';
 function Layout({ children }) {
-  TimeAgo.addDefaultLocale(vn);
-  TimeAgo.addLocale(ru);
   const dataContext = useContext(DataContext);
   const infoUser = dataContext.data;
   const handleReload = dataContext.handleReload;
-  const pusher = new Pusher('4c2d9a92e2724218381c', {
-    cluster: 'ap1',
-    encrypted: true,
-  });
+  const pusher = dataContext.pusher;
+  const [publish, setPushLish] = useState({ key: '' });
+  const [pushlishOld, setPushlishOld] = useState('');
+  const [pushlishType, setPushlishType] = useState('');
 
-  let channel = pusher.subscribe('default');
+  let channelInfoUser = '';
   if (infoUser && infoUser.id) {
-    channel = pusher.subscribe(`${infoUser.id}`);
+    channelInfoUser = pusher.subscribe(`${infoUser.id}`);
+  } else {
+    channelInfoUser = pusher.subscribe('default');
   }
 
-  //gọi api cập nhật lại tiền mỗi khi số tiền user có sự thay đổi
-  channel.bind('change-money', (data) => {
-    if (data === 'callapi') {
-      handleReload();
-    }
+  //lắng nghe sự kiện thay đổi tiền từ server
+  channelInfoUser.bind('change-money', (data) => {
+    setPushLish(data);
+    setPushlishType('change-money');
   });
 
-  //xuất hiện thông báo khi người dùng bị admin khóa tài khoản
-  channel.bind('banned-account', (data) => {
-    Swal.fire({
-      position: 'center',
-      icon: `${data.icon}`,
-      title: `${data.title}`,
-      text: `${data.message}`,
-      confirmButtonText: 'Xác Nhận',
-      background: 'rgba(0, 0, 0, 1)',
-    });
-    handleReload();
+  channelInfoUser.bind('banned-account', (data) => {
+    setPushLish(data);
+    setPushlishType('banned-account');
   });
+  useEffect(() => {
+    //gọi api cập nhật lại tiền mỗi khi số tiền user có sự thay đổi
+    if (publish.key != pushlishOld && pushlishType == 'change-money') {
+      setPushlishOld(publish.key);
+      handleReload();
+    }
+
+    if (publish.key != pushlishOld && pushlishType == 'banned-account') {
+      setPushlishOld(publish.key);
+      //xuất hiện thông báo khi người dùng bị admin khóa tài khoản
+      Swal.fire({
+        position: 'center',
+        icon: `${publish.data.icon}`,
+        title: `${publish.data.title}`,
+        text: `${publish.data.message}`,
+        confirmButtonText: 'Xác Nhận',
+        background: 'rgba(0, 0, 0, 1)',
+      });
+      handleReload();
+    }
+  }, [publish]);
   return (
     <div className="wrapper">
       <Header />

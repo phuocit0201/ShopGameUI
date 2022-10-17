@@ -8,10 +8,12 @@ import { useEffect, useContext } from 'react';
 import { DataContext } from '~/contexts/DataContext';
 import { Logout } from '~/services/users';
 import { LoadingData } from '~/components/loading';
+
 function Header() {
   const dataContext = useContext(DataContext).data;
   const handleReload = useContext(DataContext).handleReload;
   const setDataContext = useContext(DataContext).setData;
+
   const [loading, isLogout, handleLogout, setIsLogout] = Logout();
   const navigate = useNavigate();
   const handleScroll = () => {
@@ -54,7 +56,6 @@ function Header() {
   };
   window.addEventListener('scroll', handleScroll);
   window.addEventListener('resize', handelResize);
-
   return (
     <header className="header container-fluid">
       {loading && <LoadingData title="Đang Đăng Xuất" />}

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import $ from 'jquery';
-import { useNavigate } from 'react-router-dom';
+import Pusher from 'pusher-js';
+
 export const DataContext = createContext();
 function DataContextProvider({ children }) {
   const [data, setData] = useState([]);
@@ -12,9 +13,15 @@ function DataContextProvider({ children }) {
   const [settingWebsite, setSettingWebsite] = useState([]);
   const baseUrl = 'http://localhost/ShopGame/public/api/v1/';
 
+  const pusher = new Pusher('4c2d9a92e2724218381c', {
+    cluster: 'ap1',
+    encrypted: true,
+  });
+
   const handleGoToTop = () => {
     $('html, body').animate({ scrollTop: 0 }, 0);
   };
+
   const handleReload = () => {
     setReload((prev) => prev + 1);
     setLoading(true);
@@ -97,6 +104,7 @@ function DataContextProvider({ children }) {
     handleGoToTop: handleGoToTop,
     baseUrl: baseUrl,
     handleGetValueSetting: handleGetValueSetting,
+    pusher: pusher,
   };
   return <DataContext.Provider value={dataExport}>{children}</DataContext.Provider>;
 }

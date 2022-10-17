@@ -8,11 +8,16 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DataContext } from '~/contexts/DataContext';
 import { Loading, LoadingData } from '~/components/loading';
 import ReactTimeAgo from 'react-time-ago';
-
+import TimeAgo from 'javascript-time-ago';
+import ru from 'javascript-time-ago/locale/ru.json';
+import vn from 'javascript-time-ago/locale/en.json';
 function Lucky() {
   document.title = 'VÒNG QUAY 20K';
   const { slug } = useParams();
   const navigate = useNavigate();
+
+  TimeAgo.addDefaultLocale(vn);
+  TimeAgo.addLocale(ru);
 
   const dataContext = useContext(DataContext);
   const baseUrl = dataContext.baseUrl;
