@@ -1,25 +1,19 @@
-import { useContext, useEffect, useState } from 'react';
 import './info-account-game.css';
 import $ from 'jquery';
 import Notification from '~/components/notification';
+import Swal from 'sweetalert2';
+import ItemGame from '~/components/item-game';
+import { useContext, useEffect, useState } from 'react';
 import { LoadingData, Loading } from '~/components/loading';
 import { DataContext } from '~/contexts/DataContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import moment from 'moment/moment';
-import Swal from 'sweetalert2';
-import ItemGame from '~/components/item-game';
-const images = [
-  'https://shopnsocan.com/images/u6P7cKPhLePrhxECCaz2MxnLap3NVwzi.jpg',
-  'https://shopnsocan.com/images/1dTozFCl2KuZN7SAjI9UcHi4qRi7Bqem.jpg',
-  'https://shopnsocan.com/images/p8sN9uqRP2UhAbOtNerQ8oknUCGFxmIU.jpg',
-];
+
 function InfoAccountGame() {
   const { id } = useParams();
   const dataContext = useContext(DataContext);
   const loadingSystem = dataContext.loading;
   const handleReload = dataContext.handleReload;
   const isLogin = dataContext.isLogin;
-  const baseUrl = dataContext.baseUrl;
   const infoUser = dataContext.data;
   const handleGoToTop = dataContext.handleGoToTop;
   const [indexSlider, setIndexSlider] = useState(0);
@@ -39,7 +33,7 @@ function InfoAccountGame() {
   const handlePay = () => {
     setLoadingBuyAcc(true);
     $.ajax({
-      url: baseUrl + `orders/create`,
+      url: process.env.REACT_APP_URL_API + `orders/create`,
       type: 'POST',
       data: {
         account_id: id,
@@ -73,7 +67,7 @@ function InfoAccountGame() {
       });
   };
   const hanledNextSlider = () => {
-    if (indexSlider === images.length - 1) {
+    if (indexSlider === infoAccount.imgs.length - 1) {
       setIndexSlider(0);
     } else {
       setIndexSlider(indexSlider + 1);
@@ -82,7 +76,7 @@ function InfoAccountGame() {
 
   const hanledPriveSlider = () => {
     if (indexSlider === 0) {
-      setIndexSlider(parseInt(images.length - 1));
+      setIndexSlider(parseInt(infoAccount.imgs.length - 1));
     } else {
       setIndexSlider(indexSlider - 1);
     }
@@ -95,7 +89,7 @@ function InfoAccountGame() {
 
   const handleGetInfoAccount = () => {
     $.ajax({
-      url: baseUrl + `accounts/show-account-client/${id}`,
+      url: process.env.REACT_APP_URL_API + `accounts/show-account-client/${id}`,
       type: 'GET',
     }).done((responese) => {
       if (responese.status === true) {
@@ -157,7 +151,7 @@ function InfoAccountGame() {
               TTGT: <span>{infoAccount.info.family ? 'Có' : 'Không'}</span>
             </p>
             <p>
-              NGÀY ĐĂNG: <span>{moment(infoAccount.info.created_at).utc().format('DD-MM-YYYY')}</span>
+              NGÀY ĐĂNG: <span>{infoAccount.info.created_at}</span>
             </p>
           </div>
           <div className="col-12">
@@ -170,7 +164,7 @@ function InfoAccountGame() {
       <div className="content__detail-account--imgs row">
         <div className="detail__account-imgs--show col-12">
           <div className="account__imgs-box">
-            <img src={infoAccount.imgs[indexSlider]} alt="" />
+            <img src={process.env.REACT_APP_URL_PUBLIC + 'accounts/' + infoAccount.imgs[indexSlider]} alt="" />
             <div>
               <i className="fas fa-chevron-left" onClick={hanledPriveSlider}></i>
               <i className="fas fa-chevron-right" onClick={hanledNextSlider}></i>

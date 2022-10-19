@@ -1,19 +1,21 @@
-import LayoutSystem from '../components/layout-system';
 import '~/asset/client/css/money-volatility.css';
+import 'flatpickr/dist/themes/dark.css';
+import LayoutSystem from '../components/layout-system';
+import $ from 'jquery';
+import Flatpickr from 'react-flatpickr';
 import { useContext, useEffect, useState } from 'react';
 import { DataContext } from '~/contexts/DataContext';
 import { Loading } from '~/components/loading';
-import $ from 'jquery';
-import moment from 'moment/moment';
-import Flatpickr from 'react-flatpickr';
-import 'flatpickr/dist/themes/dark.css';
+
 function MoneyVolatility() {
   const title = 'BIẾN ĐỘNG SỐ DƯ';
   document.title = title;
+
   const dataContext = useContext(DataContext);
   const loadingAuth = dataContext.loading;
   const handleReload = dataContext.handleReload;
-  const baseUrl = dataContext.baseUrl;
+  const handleGoToTop = dataContext.handleGoToTop;
+
   const [loadingData, setLoadingData] = useState(true);
   const [moneyVolatility, setMoneyVolatility] = useState();
   const [perPage, setPerPage] = useState(5);
@@ -39,7 +41,7 @@ function MoneyVolatility() {
   useEffect(() => {
     const handleMoneyVolatility = async () => {
       await $.get(
-        baseUrl + 'trans-history/get-by-user?per_page=' + perPage + '&page=' + page,
+        process.env.REACT_APP_URL_API + 'trans-history/get-by-user?per_page=' + perPage + '&page=' + page,
         { token: localStorage.getItem('access_token') },
         (response) => {
           if (response.data.data) {
@@ -59,6 +61,10 @@ function MoneyVolatility() {
       handleMoneyVolatility();
     }
   }, [loadingAuth, perPage, page]);
+
+  useEffect(() => {
+    handleGoToTop();
+  }, []);
   return (
     <LayoutSystem title={title}>
       {loadingData ? (

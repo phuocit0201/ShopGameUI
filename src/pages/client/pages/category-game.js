@@ -1,20 +1,21 @@
+import '~/asset/client/css/category-game.css';
+import BoxContent from '~/components/box-content';
+import ItemGame from '~/components/item-game';
+import $ from 'jquery';
 import { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DataContext } from '~/contexts/DataContext';
-import BoxContent from '~/components/box-content';
-import ItemGame from '~/components/item-game';
 import { Loading } from '~/components/loading';
-import '~/asset/client/css/category-game.css';
-import $ from 'jquery';
 function CategoryGame() {
   document.title = 'NINJASCHOOL';
   const { slug } = useParams();
+
   const dataContext = useContext(DataContext);
   const handleGoToTop = dataContext.handleGoToTop;
   const loadingSystem = dataContext.loading;
   const handleReload = dataContext.handleReload;
-  const baseUrl = dataContext.baseUrl;
+
   const [loadingPage, setLoadingPage] = useState(true);
   const [listAccount, setListAccount] = useState([{ data: [] }]);
   const [page, setPage] = useState(1);
@@ -50,22 +51,10 @@ function CategoryGame() {
     }
   };
 
-  const handleFirstPage = () => {
-    handleReload();
-    setLoadingPage(true);
-    setPage(1);
-  };
-
-  const handleLastPage = () => {
-    handleReload();
-    setLoadingPage(true);
-    setPage(1);
-  };
-
   const handleGetAcountGame = () => {
     $.ajax({
       url:
-        baseUrl +
+        process.env.REACT_APP_URL_API +
         `accounts/get-accounts-client?slug=${slug}&page=${page}&per_page=${perPage}&server_game=${search.server_game}&class=${search.class}&sale_price=${search.sale_price}&family=${search.family}`,
       type: 'GET',
     })
@@ -172,25 +161,10 @@ function CategoryGame() {
             <li className="page-item page-after">
               <button onClick={handlePreviousPage}>Trước</button>
             </li>
-
-            {page - 3 > 1 && (
-              <li className="page-item page-after">
-                <button onClick={handleFirstPage}>1</button>
-              </li>
-            )}
-            {page - 3 > 1 && (
-              <li className="page-item btn-disabled">
-                <button disabled className="page-link paginate-disabled">
-                  ...
-                </button>
-              </li>
-            )}
             {listAccount.links.map(
               (item, index) =>
                 index !== 0 &&
-                index !== listAccount.links.length - 1 &&
-                index >= page - 3 &&
-                index <= page + 3 && (
+                index !== listAccount.links.length - 1 && (
                   <li key={index} className="page-item">
                     <button
                       onClick={(e) => handleSetPage(e)}
@@ -200,22 +174,6 @@ function CategoryGame() {
                     </button>
                   </li>
                 ),
-            )}
-
-            {page + 3 < listAccount.last_page && (
-              <li className="page-item btn-disabled">
-                <button disabled className="page-link paginate-disabled">
-                  ...
-                </button>
-              </li>
-            )}
-
-            {page + 3 < listAccount.last_page && (
-              <li className="page-item">
-                <button className="page-link" onClick={(e) => handleSetPage(e)}>
-                  {listAccount.last_page}
-                </button>
-              </li>
             )}
             <li className="page-item page-next">
               <button onClick={handleNextPage}>Tiếp theo</button>

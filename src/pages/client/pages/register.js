@@ -1,16 +1,17 @@
+import Form from '~/components/form';
+import Swal from 'sweetalert2';
+import $ from 'jquery';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Form from '~/components/form';
 import { DataContext } from '~/contexts/DataContext';
-import $ from 'jquery';
 import { LoadingData } from '~/components/loading';
-import Swal from 'sweetalert2';
+
 import '~/asset/client/css/register.css';
 function Register() {
   document.title = 'Đăng Kí';
   const dataContext = useContext(DataContext);
   const handleGoToTop = dataContext.handleGoToTop;
-  const baseUrl = dataContext.baseUrl;
+
   let navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +37,7 @@ function Register() {
       error.email === ''
     ) {
       setLoading(true);
-      $.post(baseUrl + 'users/create', data, (response) => {
+      $.post(process.env.REACT_APP_URL_API + 'users/create', data, (response) => {
         if (response.status === true) {
           Swal.fire({
             position: 'center',

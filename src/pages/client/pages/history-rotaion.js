@@ -1,16 +1,17 @@
 import '~/asset/client/css/history-buy-account.css';
 import LayoutSystem from '../components/layout-system';
+import $ from 'jquery';
 import { DataContext } from '~/contexts/DataContext';
 import { useContext, useEffect, useState } from 'react';
 import { Loading } from '~/components/loading';
-import $ from 'jquery';
 function HistoryRotation() {
   const title = 'LỊCH SỬ VÒNG QUAY';
   document.title = title;
   const dataContext = useContext(DataContext);
-  const baseUrl = dataContext.baseUrl;
   const handleReload = dataContext.handleReload;
   const loadingAuth = dataContext.loading;
+  const handleGoToTop = dataContext.handleGoToTop;
+
   const [loading, setLoading] = useState(true);
   const [loadingHistoty, setLoadingHistory] = useState(true);
   const [history, setHistory] = useState([]);
@@ -40,7 +41,7 @@ function HistoryRotation() {
 
   const handleGetHistory = () => {
     $.ajax({
-      url: baseUrl + `rotation-luck/get-history-by-user?page=${page}&per_page=${perPage}`,
+      url: process.env.REACT_APP_URL_API + `rotation-luck/get-history-by-user?page=${page}&per_page=${perPage}`,
       type: 'GET',
       data: {
         token: localStorage.getItem('access_token'),
@@ -74,6 +75,9 @@ function HistoryRotation() {
     }
   }, [loadingHistoty]);
 
+  useEffect(() => {
+    handleGoToTop();
+  }, []);
   return (
     <LayoutSystem title={title}>
       {loading ? (

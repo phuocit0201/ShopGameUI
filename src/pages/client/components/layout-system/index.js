@@ -1,7 +1,7 @@
+import './layout-system.css';
 import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DataContext } from '~/contexts/DataContext';
-import './layout-system.css';
 function LayoutSystem({ children, title }) {
   const handleReload = useContext(DataContext).handleReload;
   return (

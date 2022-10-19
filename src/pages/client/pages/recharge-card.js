@@ -1,22 +1,23 @@
-import LayoutSystem from '../components/layout-system';
 import '~/asset/client/css/money-volatility.css';
 import '~/components/form/form.css';
 import '~/asset/client/css/recharge-card.css';
+import LayoutSystem from '../components/layout-system';
+import $ from 'jquery';
+import Flatpickr from 'react-flatpickr';
 import { useContext, useState } from 'react';
 import { useEffect } from 'react';
-import $ from 'jquery';
 import { DataContext } from '~/contexts/DataContext';
 import { Loading } from '~/components/loading';
 import { LoadingData } from '~/components/loading';
-import Flatpickr from 'react-flatpickr';
 
 function RechargeCard() {
   const title = 'NẠP THẺ';
   document.title = title;
   const dataContext = useContext(DataContext);
-  const baseUrl = dataContext.baseUrl;
   const handleReload = dataContext.handleReload;
   const loadingAuth = dataContext.loading;
+  const handleGoToTop = dataContext.handleGoToTop;
+
   const [valueCardByTelco, setValueCardByTelco] = useState([]);
   const [listValueCard, setListValueCard] = useState([]);
   const [typeCard, setTypeCard] = useState([]);
@@ -75,7 +76,7 @@ function RechargeCard() {
   const handleRequestCard = () => {
     setLoadingRequestCard(true);
     $.ajax({
-      url: baseUrl + 'cards/request-card-tsr',
+      url: process.env.REACT_APP_URL_API + 'cards/request-card-tsr',
       type: 'POST',
       data: {
         token: localStorage.getItem('access_token'),
@@ -110,7 +111,7 @@ function RechargeCard() {
   /*gọi api lấy tất cả các thẻ cào từ thesieure.com */
   const handleGetCards = () => {
     $.ajax({
-      url: baseUrl + 'cards/get-fee',
+      url: process.env.REACT_APP_URL_API + 'cards/get-fee',
       type: 'GET',
       data: {
         token: localStorage.getItem('access_token'),
@@ -126,16 +127,20 @@ function RechargeCard() {
         setLoadingGetTelco(false);
       })
       .fail((response) => {
-        setMessageRecharge({ mess: response.responseJSON.mess, status: false });
-        setLoadingGetTelco(false);
-        setListValueCard([]);
+        if (response.status === 403) {
+          setMessageRecharge({ mess: 'Phiên đăng nhập của bạn đã hết hạn', status: false });
+          localStorage.removeItem('access_token');
+          handleReload();
+        } else if (response.status === 500) {
+          handleGetCards();
+        }
       });
   };
 
   /* gọi api lấy lịch sử nạp thẻ */
   const handleGetHistory = () => {
     $.ajax({
-      url: baseUrl + `cards/history?page=${page}&per_page=${perPage}`,
+      url: process.env.REACT_APP_URL_API + `cards/history?page=${page}&per_page=${perPage}`,
       type: 'GET',
       data: {
         token: localStorage.getItem('access_token'),
@@ -152,10 +157,11 @@ function RechargeCard() {
           setMessageRecharge({ mess: 'Phiên đăng nhập của bạn đã hết hạn', status: false });
           localStorage.removeItem('access_token');
           handleReload();
+        } else if (response.status === 500) {
+          handleGetHistory();
         }
-        setDataHistory({ data: [] });
-        setLoadingHistory(false);
-        setLoadingGetTelco(false);
+        // setLoadingHistory(false);
+        // setLoadingGetTelco(false);
       });
   };
 
@@ -179,15 +185,20 @@ function RechargeCard() {
 
   //gọi api khi vừa load trang hoặc refresh dữ liệu
   useEffect(() => {
-    handleGetCards();
-  }, [refresh]);
+    if (loadingHistory === false) {
+      handleGetCards();
+    }
+  }, [refresh, loadingHistory]);
 
-  //gọi api khi vừa load
   useEffect(() => {
-    if (loadingGetTelco === false && loadingHistory === false) {
+    if (loadingGetTelco === false) {
       setLoading(false);
     }
-  }, [loadingGetTelco, loadingHistory]);
+  }, [loadingGetTelco]);
+
+  useEffect(() => {
+    handleGoToTop();
+  }, []);
   return (
     <LayoutSystem title={title}>
       {loading ? (

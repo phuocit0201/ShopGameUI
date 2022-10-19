@@ -1,16 +1,17 @@
-import LayoutSystem from '../components/layout-system';
 import '~/components/form/form.css';
 import '~/asset/client/css/change-password.css';
-import { useContext, useState } from 'react';
+import LayoutSystem from '../components/layout-system';
+import $ from 'jquery';
+import { useContext, useEffect, useState } from 'react';
 import { DataContext } from '~/contexts/DataContext';
 import { Loading } from '~/components/loading';
-import $ from 'jquery';
 function ChangePassword() {
   const title = 'ĐỔI MẬT KHẨU';
   document.title = title;
   const dataContext = useContext(DataContext);
-  const baseUrl = dataContext.baseUrl;
   const handleReload = dataContext.handleReload;
+  const handleGoToTop = dataContext.handleGoToTop;
+
   const [passwordNew, setPasswordNew] = useState('');
   const [passwordOld, setPasswordOld] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -57,7 +58,7 @@ function ChangePassword() {
     if (error.password_new === '' && error.password_confirm === '') {
       setLoading(true);
       $.ajax({
-        url: baseUrl + 'users/change-password',
+        url: process.env.REACT_APP_URL_API + 'users/change-password',
         type: 'PUT',
         data: {
           password_old: passwordOld,
@@ -91,6 +92,10 @@ function ChangePassword() {
         });
     }
   };
+
+  useEffect(() => {
+    handleGoToTop();
+  }, []);
   return (
     <LayoutSystem title={title}>
       {loading && <Loading />}

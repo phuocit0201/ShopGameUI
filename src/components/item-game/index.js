@@ -9,7 +9,7 @@ function ItemGame({ data }) {
   return (
     <div className="container__item--game">
       <div className="item__game--img">
-        <img src={data.avatar} alt="" />
+        <img src={process.env.REACT_APP_URL_PUBLIC + 'accounts/' + data.avatar} alt="" />
       </div>
       <div className="item__game--info">
         <div className="item__game--info-top row">

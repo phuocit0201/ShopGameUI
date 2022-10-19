@@ -1,26 +1,20 @@
+import '~/asset/client/css/lucky.css';
 import BoxContent from '~/components/box-content';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
+import moment from 'moment/moment';
 import btnRotato from '~/asset/client/images/lucky/btn-rotato.jpg';
-import '~/asset/client/css/lucky.css';
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DataContext } from '~/contexts/DataContext';
 import { Loading, LoadingData } from '~/components/loading';
-import ReactTimeAgo from 'react-time-ago';
-import TimeAgo from 'javascript-time-ago';
-import ru from 'javascript-time-ago/locale/ru.json';
-import vn from 'javascript-time-ago/locale/en.json';
+
 function Lucky() {
-  document.title = 'VÒNG QUAY 20K';
+  document.title = 'VÒNG QUAY';
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  TimeAgo.addDefaultLocale(vn);
-  TimeAgo.addLocale(ru);
-
   const dataContext = useContext(DataContext);
-  const baseUrl = dataContext.baseUrl;
   const hanleReload = dataContext.handleReload;
   const handleGoToTop = dataContext.handleGoToTop;
   const loadingSystem = dataContext.loading;
@@ -28,12 +22,14 @@ function Lucky() {
 
   const [loadingRotation, setLoadingRotation] = useState(false);
   const [loadingPage, setLoadingPage] = useState(true);
+  const [loadingHistoryRecently, setLoadingHistoryRecently] = useState(true);
+  const [loadingInfoLuck, setLoadingInfoLuck] = useState(true);
 
   const [resetRotato, setResetRotato] = useState(false);
   const [flag, setFlag] = useState(true);
   const [dataRotation, setDataRotation] = useState({});
   const [dataHistotyRecently, setDataHistotyRecently] = useState([]);
-  const [loadingHistoryRecently, setLoadingHistoryRecently] = useState(true);
+  const [infoLuck, setInfoLuck] = useState([]);
 
   const handleRotato = () => {
     if (isLogin === false) {
@@ -43,7 +39,7 @@ function Lucky() {
       setFlag(false);
       setLoadingRotation(true);
       $.ajax({
-        url: baseUrl + 'rotation-luck/rotation',
+        url: process.env.REACT_APP_URL_API + 'rotation-luck/rotation',
         type: 'POST',
         data: {
           token: localStorage.getItem('access_token'),
@@ -75,19 +71,56 @@ function Lucky() {
 
   const handleHistoyRecently = () => {
     $.ajax({
-      url: baseUrl + `rotation-luck/show-history-recently/${slug}`,
+      url: process.env.REACT_APP_URL_API + `rotation-luck/show-history-recently/${slug}`,
       type: 'GET',
-    }).done((response) => {
-      if (response.data) {
-        setDataHistotyRecently(response.data);
-        setLoadingHistoryRecently(false);
-      }
-    });
+    })
+      .done((response) => {
+        if (response.data) {
+          setDataHistotyRecently(response.data);
+          setLoadingHistoryRecently(false);
+        }
+      })
+      .fail(() => {
+        handleHistoyRecently();
+      });
+  };
+
+  const handleGetRotation = () => {
+    $.ajax({
+      url: process.env.REACT_APP_URL_API + `rotation-luck/show-client/${slug}`,
+      type: 'GET',
+    })
+      .done((response) => {
+        if (response.data) {
+          setInfoLuck(response.data);
+          setLoadingInfoLuck(false);
+        }
+      })
+      .fail(() => {
+        handleGetRotation();
+      });
   };
 
   useEffect(() => {
+    if (loadingSystem === false) {
+      handleGetRotation();
+    }
+  }, [loadingSystem]);
+
+  useEffect(() => {
+    if (loadingInfoLuck === false) {
+      handleHistoyRecently();
+    }
+  }, [loadingInfoLuck]);
+
+  useEffect(() => {
+    if (loadingHistoryRecently === false) {
+      setLoadingPage(false);
+    }
+  }, [loadingHistoryRecently]);
+
+  useEffect(() => {
     handleGoToTop();
-    handleHistoyRecently();
   }, []);
 
   useEffect(() => {
@@ -111,12 +144,6 @@ function Lucky() {
   }, [loadingRotation]);
 
   useEffect(() => {
-    if (loadingSystem === false && loadingHistoryRecently === false) {
-      setLoadingPage(false);
-    }
-  }, [loadingSystem, loadingHistoryRecently]);
-
-  useEffect(() => {
     if (resetRotato === true) {
       $('.rotato').css('transition', 'unset');
       $('.rotato').css('transform', `rotate(0deg)`);
@@ -135,13 +162,13 @@ function Lucky() {
         <div className="category-lucky__content--title">
           <h2 className="text-center">VÒNG QUAY MAY MẮN</h2>
           <span></span>
-          <h2>Lượt quay 20,000 VNĐ</h2>
+          <h2>Lượt quay {new Intl.NumberFormat().format(infoLuck.price)} VNĐ</h2>
         </div>
         <div className="wrapper__lucky--content row">
           <div className="col-xl-6 col-lg-6">
             <div className="wrapper__lucky--content-rotato">
               <div className="lucky__content--rotato-img">
-                <img className="rotato" src="https://banxu24h.com/upload-usr/images/8jvYoWT7JS_1634812808.png" alt="" />
+                <img className="rotato" src={process.env.REACT_APP_URL_PUBLIC + 'lucky/' + infoLuck.img_gift} alt="" />
                 <img onClick={handleRotato} className="btn-rotato" src={btnRotato} alt="" />
               </div>
             </div>
@@ -172,9 +199,7 @@ function Lucky() {
                       <tr key={item.id}>
                         <td className="text-center">{item.username}</td>
                         <td className="text-center">{new Intl.NumberFormat().format(item.coins)} xu</td>
-                        <td className="text-center">
-                          <ReactTimeAgo date={item.created_at} locale="en-US" />
-                        </td>
+                        <td className="text-center">{moment(item.created_at).utc('00:07').format('DD-MM-YYYY')}</td>
                       </tr>
                     ))}
                   </tbody>

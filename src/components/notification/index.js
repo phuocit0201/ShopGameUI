@@ -1,5 +1,5 @@
-import parse from 'html-react-parser';
 import './notification.css';
+import parse from 'html-react-parser';
 import $ from 'jquery';
 function Notification({ children, title }) {
   const closeNotification = () => {

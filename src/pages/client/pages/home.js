@@ -1,82 +1,122 @@
 import '~/asset/client/css/home.css';
-import { Link } from 'react-router-dom';
-import team from '~/asset/client/images/home/team.gif';
 import btn from '~/asset/client/images/home/quayngay.png';
 import btnBuy from '~/asset/client/images/nick/btn-buy.png';
 import Notification from '~/components/notification';
+import $ from 'jquery';
+import API from '~/services/rest-client';
+import parse from 'html-react-parser';
 import sale from '~/asset/client/images/home/sale.gif';
 import { useContext, useEffect, useState } from 'react';
-import API from '~/services/rest-client';
-import $ from 'jquery';
-import { AwaitData } from '~/components/loading';
+import { Loading } from '~/components/loading';
 import { DataContext } from '~/contexts/DataContext';
-import parse from 'html-react-parser';
+import { Link } from 'react-router-dom';
 
 function Home() {
   document.title = 'Trang Chủ';
+
   const dataContext = useContext(DataContext);
   const handleGoToTop = dataContext.handleGoToTop;
-  const baseUrl = dataContext.baseUrl;
   const handleGetValueSetting = dataContext.handleGetValueSetting;
   const handleReload = dataContext.handleReload;
-  const [notification, setNotification] = useState('');
   const loadingSystem = dataContext.loading;
+
+  const [notification, setNotification] = useState('');
   const [categoryGameList, setCategoryGame] = useState([]);
   const [luckyList, setLuckyList] = useState([]);
-  const [loadingData, setLoadingData] = useState(true);
+  const [dataTopMonth, setDataTopMonth] = useState([]);
+
+  const [loadingCategory, setLoadingCategory] = useState(true);
+  const [loadingLuky, setLoadingLuky] = useState(true);
+  const [loadingTopMonth, setLoadingTopMonth] = useState(true);
+  const [loadingPage, setLoadingPage] = useState(true);
+
   useEffect(() => {
     handleGoToTop();
   }, []);
 
+  const handleCategoryGame = () => {
+    API.get(process.env.REACT_APP_URL_API + 'categories/get-client')
+      .then((res) => {
+        setCategoryGame(res.data.data);
+        setLoadingCategory(false);
+      })
+      .catch(() => {
+        handleCategoryGame();
+      });
+  };
+
+  const handleLucky = () => {
+    API.get(process.env.REACT_APP_URL_API + 'rotation-luck/get-client')
+      .then((res) => {
+        setLuckyList(res.data.data);
+        setLoadingLuky(false);
+      })
+      .catch(() => {
+        handleLucky();
+      });
+  };
+  const handleTopMonth = () => {
+    API.get(process.env.REACT_APP_URL_API + 'trans-history/get-top-month')
+      .then((res) => {
+        setDataTopMonth(res.data.data);
+        setLoadingTopMonth(false);
+      })
+      .catch(() => {
+        handleTopMonth();
+      });
+  };
   useEffect(() => {
     if (loadingSystem === false) {
-      API.get(baseUrl + 'categories/index?page=1&per_page=10').then((res) => {
-        setCategoryGame(res.data.data);
-      });
-      API.get(baseUrl + 'rotation-luck/index').then((res) => {
-        setLuckyList(res.data.data);
-        setLoadingData(false);
-      });
+      handleCategoryGame();
     }
   }, [loadingSystem]);
 
   useEffect(() => {
-    if (loadingData === false) {
+    if (loadingCategory === false) {
+      handleLucky();
+    }
+  }, [loadingCategory]);
+
+  useEffect(() => {
+    if (loadingLuky === false) {
+      handleTopMonth();
+    }
+  }, [loadingLuky]);
+
+  useEffect(() => {
+    if (loadingTopMonth === false) {
+      setLoadingPage(false);
+    }
+  }, [loadingTopMonth]);
+
+  useEffect(() => {
+    if (loadingPage === false) {
       setNotification(handleGetValueSetting('notification'));
       $('.notification').css({ opacity: 1, 'pointer-events': 'unset' });
       $('#notification').css({ transform: 'unset', transition: 'all 0.25s linear' });
     }
-  }, [loadingData]);
+  }, [loadingPage]);
 
-  return (
+  return loadingPage ? (
+    <Loading />
+  ) : (
     <div className="content container">
       <div className="content__banner--container">
         <div className="content__banner row">
           <div className="content__banner--left col-lg-4">
             <div className="content__banner--left-box">
-              <h3>TOP NẠP THÁNG 9</h3>
+              <h3>TOP NẠP THÁNG</h3>
               <ul className="banner__left--top">
-                <li>
-                  <i>1</i>
-                  <span>phuoc***</span>
-                  <label htmlFor="">
-                    9.550.000<sup>đ</sup>
-                  </label>
-                </li>
-                <li>
-                  <i>2</i>
-                  <span>phuoc***</span>
-                  <label htmlFor="">
-                    9.550.000<sup>đ</sup>
-                  </label>
-                </li>
-                <li>
-                  <i>3</i>
-                  <span>phuoc***</span>
-                  <label htmlFor="">
-                    9.550.000<sup>đ</sup>
-                  </label>
-                </li>
+                {dataTopMonth.map((user, index) => (
+                  <li key={index}>
+                    <i>{index + 1}</i>
+                    <span>{user.username}</span>
+                    <label htmlFor="">
+                      {new Intl.NumberFormat().format(user.tong)}
+                      <sup>đ</sup>
+                    </label>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -90,76 +130,74 @@ function Home() {
           </div>
         </div>
       </div>
-      {loadingData ? (
-        <AwaitData />
-      ) : (
-        <div>
-          <div className="category__container">
-            <div className="category__content row">
-              <div className="category-lucky__content--title col-sm-12">
-                <h2 className="text-center">DANH MỤC VÒNG QUAY</h2>
-                <span></span>
-              </div>
-              {luckyList
-                ? luckyList.map((item, index) => (
-                    <div key={index} className="category-lucky__content--box col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                      <div className="content__box--container">
-                        <img src={item.img} alt="" />
-                        <div className="content__box--info">
-                          <h4>
-                            <Link to="/">{item.rotation_name}</Link>
-                          </h4>
-                          {/* <p>Đã quay: {item.number}</p> */}
-                          <p>Đã quay: 300</p>
-                          <div className="content__box--info-price">
-                            {/* <span className="text-decoration-line-through">{item.price}đ</span> */}
-                            <span className="text-decoration-line-through">30.000đ</span>
-                            {/* <span>{item.priceSale}đ</span> */}
-                            <span>20.000đ</span>
-                          </div>
-                          <div className="content__box--info-btn">
-                            <Link to={`/vong-quay-may-man/${item.slug}`} onClick={handleReload}>
-                              <img src={btn} alt="" />
-                            </Link>
-                          </div>
+
+      <div>
+        <div className="category__container">
+          <div className="category__content row">
+            <div className="category-lucky__content--title col-sm-12">
+              <h2 className="text-center">DANH MỤC VÒNG QUAY</h2>
+              <span></span>
+            </div>
+            {luckyList
+              ? luckyList.map((item, index) => (
+                  <div key={index} className="category-lucky__content--box col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                    <div className="content__box--container">
+                      <img src={process.env.REACT_APP_URL_PUBLIC + 'thumb/' + item.img} alt="" />
+                      <div className="content__box--info">
+                        <h4>
+                          <Link to="/">{item.rotation_name}</Link>
+                        </h4>
+                        <p>Đã quay: {item.sum}</p>
+                        <div className="content__box--info-price">
+                          <span className="text-decoration-line-through">
+                            {new Intl.NumberFormat().format(item.price + item.price * 0.5)}đ
+                          </span>
+                          <span>{new Intl.NumberFormat().format(item.price)}đ</span>
+                        </div>
+                        <div className="content__box--info-btn">
+                          <Link to={`/vong-quay-may-man/${item.slug}`} onClick={handleReload}>
+                            <img src={btn} alt="" />
+                          </Link>
                         </div>
                       </div>
                     </div>
-                  ))
-                : ''}
-            </div>
-          </div>
-          <div className="category__container">
-            <div className="category__content row">
-              <div className="category-lucky__content--title col-sm-12">
-                <h2 className="text-center">DANH MỤC NICK GAME</h2>
-                <span></span>
-              </div>
-              {categoryGameList
-                ? categoryGameList.map((item, index) => (
-                    <div key={index} className="category-lucky__content--box col-lg-3">
-                      <div className="content__box--container">
-                        <img src={item.img} alt="" />
-                        <div className="content__box--info">
-                          <h4>
-                            <Link to="/">{item.name}</Link>
-                          </h4>
-                          <p>Số lượng: 20.999</p>
-                          <p style={{ margin: 'unset' }}>Đã bán: 10.999</p>
-                          <div className="content__box--info-btn">
-                            <Link to={'/danh-muc-game/' + item.slug} onClick={handleReload}>
-                              <img src={btnBuy} alt="" />
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                : ''}
-            </div>
+                  </div>
+                ))
+              : ''}
           </div>
         </div>
-      )}
+        <div className="category__container">
+          <div className="category__content row">
+            <div className="category-lucky__content--title col-sm-12">
+              <h2 className="text-center">DANH MỤC NICK GAME</h2>
+              <span></span>
+            </div>
+            {categoryGameList
+              ? categoryGameList.map((item, index) => (
+                  <div key={index} className="category-lucky__content--box col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                    <div className="content__box--container">
+                      <img src={process.env.REACT_APP_URL_PUBLIC + 'categories/' + item.img} alt="" />
+                      <div className="content__box--info">
+                        <h4>
+                          <Link to="/">{item.name}</Link>
+                        </h4>
+                        <p>Số lượng: {new Intl.NumberFormat().format(item.quantity_account)}</p>
+                        <p style={{ margin: 'unset' }}>
+                          Đã bán: {new Intl.NumberFormat().format(item.quantity_sold_account)}
+                        </p>
+                        <div className="content__box--info-btn">
+                          <Link to={'/danh-muc-game/' + item.slug} onClick={handleReload}>
+                            <img src={btnBuy} alt="" />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              : ''}
+          </div>
+        </div>
+      </div>
 
       <Notification title={'Thông Báo'}>
         <div>{notification !== '' && parse(notification)}</div>

@@ -1,15 +1,15 @@
-import { useContext, useEffect, useState } from 'react';
 import Form from '~/components/form';
 import $ from 'jquery';
 import { useNavigate } from 'react-router-dom';
 import { LoadingData } from '~/components/loading';
 import { DataContext } from '~/contexts/DataContext';
+import { useContext, useEffect, useState } from 'react';
+
 function Login() {
   document.title = 'Đăng Nhập';
   const dataContext = useContext(DataContext);
   const handleReload = dataContext.handleReload;
   const handleGoToTop = dataContext.handleGoToTop;
-  const baseUrl = dataContext.baseUrl;
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -20,11 +20,15 @@ function Login() {
   const handleLogin = async () => {
     if (username !== '' && password !== '') {
       setLoading(true);
-      await $.post(baseUrl + 'users/login', { username: username, password: password }, (response) => {
-        localStorage.setItem('access_token', response.access_token);
-        handleReload();
-        navigate('/');
-      }).catch(() => {
+      await $.post(
+        process.env.REACT_APP_URL_API + 'users/login',
+        { username: username, password: password },
+        (response) => {
+          localStorage.setItem('access_token', response.access_token);
+          handleReload();
+          navigate('/');
+        },
+      ).catch(() => {
         setLoading(false);
         setLoginFalse(true);
         navigate('/dang-nhap');

@@ -7,7 +7,11 @@ function InfoAtmMomo({ data, command }) {
   return (
     <div className="container__card--info">
       <div className="card__info--logo">
-        <img src={data.link_logo} className={data.type === 'thesieure' ? 'logo__tsr' : ''} alt="" />
+        <img
+          src={process.env.REACT_APP_URL_PUBLIC + 'logo/' + data.link_logo}
+          className={data.type === 'thesieure' ? 'logo__tsr' : ''}
+          alt=""
+        />
       </div>
       <div className="card__info--content">
         <table className="table">

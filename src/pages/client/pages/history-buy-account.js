@@ -1,18 +1,19 @@
 import '~/asset/client/css/history-buy-account.css';
 import LayoutSystem from '../components/layout-system';
-import { DataContext } from '~/contexts/DataContext';
-import { useContext, useEffect, useState } from 'react';
-import moment from 'moment/moment';
-import { Loading } from '~/components/loading';
 import $ from 'jquery';
 import Notification from '~/components/notification';
+import { DataContext } from '~/contexts/DataContext';
+import { useContext, useEffect, useState } from 'react';
+import { Loading } from '~/components/loading';
+
 function HistoryBuyAccount() {
   const title = 'LỊCH SỬ MUA NICK';
   document.title = title;
   const dataContext = useContext(DataContext);
-  const baseUrl = dataContext.baseUrl;
   const handleReload = dataContext.handleReload;
   const loadingAuth = dataContext.loading;
+  const handleGoToTop = dataContext.handleGoToTop;
+
   const [loading, setLoading] = useState(true);
   const [loadingHistoty, setLoadingHistory] = useState(true);
   const [loadingOrderDetail, setLoadingOrderDetail] = useState(true);
@@ -45,7 +46,7 @@ function HistoryBuyAccount() {
 
   const handleGetHistory = () => {
     $.ajax({
-      url: baseUrl + `orders/get-orders-by-user?page=1&per_page=10`,
+      url: process.env.REACT_APP_URL_API + `orders/get-orders-by-user?page=${page}&per_page=${perPage}`,
       type: 'GET',
       data: {
         token: localStorage.getItem('access_token'),
@@ -61,15 +62,15 @@ function HistoryBuyAccount() {
         if (response.status === 403) {
           localStorage.removeItem('access_token');
           handleReload();
+        } else if (response.status === 500) {
+          handleGetHistory();
         }
-        setHistory({ data: [] });
-        setLoadingHistory(false);
       });
   };
 
   const handleGetOrderDetail = () => {
     $.ajax({
-      url: baseUrl + `orders/get-orders-detail-by-user`,
+      url: process.env.REACT_APP_URL_API + `orders/get-orders-detail-by-user`,
       type: 'GET',
       data: {
         token: localStorage.getItem('access_token'),
@@ -85,8 +86,9 @@ function HistoryBuyAccount() {
         if (response.status === 403) {
           localStorage.removeItem('access_token');
           handleReload();
+        } else if (response.status === 500) {
+          handleGetOrderDetail();
         }
-        setLoadingOrderDetail(false);
       });
   };
 
@@ -102,17 +104,26 @@ function HistoryBuyAccount() {
   };
 
   useEffect(() => {
-    if (loadingAuth === false) {
-      handleGetHistory();
-      handleGetOrderDetail();
-    }
-  }, [loadingAuth, perPage, page]);
+    handleGoToTop();
+  }, []);
 
   useEffect(() => {
-    if (loadingHistoty === false && loadingOrderDetail === false) {
+    if (loadingAuth === false) {
+      handleGetHistory();
+    }
+  }, [loadingAuth]);
+
+  useEffect(() => {
+    if (loadingAuth === false) {
+      handleGetOrderDetail();
+    }
+  }, [loadingHistoty === false]);
+
+  useEffect(() => {
+    if (loadingOrderDetail === false) {
       setLoading(false);
     }
-  }, [loadingHistoty, loadingOrderDetail]);
+  }, [loadingOrderDetail]);
 
   return (
     <LayoutSystem title={title}>
@@ -148,7 +159,7 @@ function HistoryBuyAccount() {
                     <td>{item.account_id}</td>
                     <td>{item.name}</td>
                     <td className="text-info">{new Intl.NumberFormat().format(item.price)}</td>
-                    <td>{moment(item.created_at).utc().format('H:m:s DD-MM-YYYY')}</td>
+                    <td>{item.created_at}</td>
                     <td>
                       <button
                         idaccount={item.account_id}

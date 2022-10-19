@@ -1,8 +1,8 @@
 import Header from './header';
 import Footer from './footer';
+import Swal from 'sweetalert2';
 import { DataContext } from '~/contexts/DataContext';
 import { useContext, useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
 function Layout({ children }) {
   const dataContext = useContext(DataContext);
   const infoUser = dataContext.data;

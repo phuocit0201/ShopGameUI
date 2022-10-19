@@ -1,39 +1,60 @@
+import '~/asset/client/css/atm-momo.css';
 import LayoutSystem from '../components/layout-system';
 import InfoAtmMomo from '~/components/atm-momo';
-import '~/asset/client/css/atm-momo.css';
-import { useContext, useEffect, useState } from 'react';
-import { DataContext } from '~/contexts/DataContext';
 import $ from 'jquery';
+import { useContext, useEffect, useState } from 'react';
 import { Loading } from '~/components/loading';
+import { DataContext } from '~/contexts/DataContext';
+
 function AtmMomo() {
   const title = 'NẠP ATM - VÍ ĐIỆN TỬ';
   document.title = title;
+
   const dataContext = useContext(DataContext);
-  const baseUrl = dataContext.baseUrl;
+  const handleGoToTop = dataContext.handleGoToTop;
+  const loadingSystem = dataContext.loading;
+
   const [listAtmWallet, setListAtmWallet] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingData, setLoadingData] = useState(true);
+  const [loadingPage, setLoadingPage] = useState(true);
+
+  const handleGetAtmMM = () => {};
+  $.ajax({
+    url: process.env.REACT_APP_URL_API + 'atm-wallet/get',
+    type: 'GET',
+    data: {
+      token: localStorage.getItem('access_token'),
+    },
+  })
+    .done((response) => {
+      if (response.status === true) {
+        setListAtmWallet(response.data);
+      }
+      setLoadingData(false);
+    })
+    .fail(() => {
+      handleGetAtmMM();
+    });
 
   useEffect(() => {
-    $.ajax({
-      url: baseUrl + 'atm-wallet/get',
-      type: 'GET',
-      data: {
-        token: localStorage.getItem('access_token'),
-      },
-    })
-      .done((response) => {
-        if (response.status === true) {
-          setListAtmWallet(response.data);
-        }
-        setLoading(false);
-      })
-      .fail(() => {
-        setLoading(false);
-      });
+    handleGoToTop();
   }, []);
+
+  useEffect(() => {
+    if (loadingSystem === false) {
+      handleGetAtmMM();
+    }
+  }, [loadingSystem]);
+
+  useEffect(() => {
+    if (loadingData === false) {
+      setLoadingPage(false);
+    }
+  }, [loadingData]);
+
   return (
     <LayoutSystem title={title}>
-      {loading ? (
+      {loadingPage ? (
         <Loading />
       ) : listAtmWallet.length !== 0 ? (
         <div className="container__content--atm-momo row">

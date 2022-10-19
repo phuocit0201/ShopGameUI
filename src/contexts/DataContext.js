@@ -1,6 +1,6 @@
-import { createContext, useEffect, useState } from 'react';
 import $ from 'jquery';
 import Pusher from 'pusher-js';
+import { createContext, useEffect, useState } from 'react';
 
 export const DataContext = createContext();
 function DataContextProvider({ children }) {
@@ -11,7 +11,6 @@ function DataContextProvider({ children }) {
   const [loadingGetMe, setLoadingGetMe] = useState(true);
   const [loadingSetting, setLoadingSetting] = useState(true);
   const [settingWebsite, setSettingWebsite] = useState([]);
-  const baseUrl = 'http://localhost/ShopGame/public/api/v1/';
 
   const pusher = new Pusher('4c2d9a92e2724218381c', {
     cluster: 'ap1',
@@ -30,7 +29,7 @@ function DataContextProvider({ children }) {
   const handleGetMe = () => {
     if (localStorage.getItem('access_token') !== null) {
       $.ajax({
-        url: baseUrl + 'users/get-me',
+        url: process.env.REACT_APP_URL_API + 'users/get-me',
         type: 'POST',
         data: {
           token: localStorage.getItem('access_token'),
@@ -47,8 +46,8 @@ function DataContextProvider({ children }) {
             setLoadingGetMe(false);
             localStorage.removeItem('access_token');
             setData(null);
-          } else if (err.status === 500) {
-            handleReload();
+          } else {
+            handleGetMe();
           }
         });
     } else {
@@ -60,7 +59,7 @@ function DataContextProvider({ children }) {
 
   const handleGetSettingWebsite = () => {
     $.ajax({
-      url: baseUrl + 'settings/get-settings',
+      url: process.env.REACT_APP_URL_API + 'settings/get-settings',
       type: 'GET',
     })
       .done((response) => {
@@ -70,7 +69,7 @@ function DataContextProvider({ children }) {
         setLoadingSetting(false);
       })
       .fail(() => {
-        setLoadingSetting(false);
+        handleGetSettingWebsite();
       });
   };
 
@@ -85,16 +84,21 @@ function DataContextProvider({ children }) {
 
   useEffect(() => {
     handleGetMe();
-    handleGetSettingWebsite();
   }, [reload]);
 
   useEffect(() => {
-    if (loadingGetMe === false && loadingSetting === false) {
+    if (loadingGetMe === false) {
+      handleGetSettingWebsite();
+    }
+  }, [loadingGetMe]);
+
+  useEffect(() => {
+    if (loadingSetting === false) {
       setLoading(false);
       setLoadingGetMe(true);
       setLoadingSetting(true);
     }
-  }, [loadingGetMe, loadingSetting]);
+  }, [loadingSetting]);
   const dataExport = {
     data: data,
     handleReload: handleReload,
@@ -102,7 +106,6 @@ function DataContextProvider({ children }) {
     loading: loading,
     isLogin: isLogin,
     handleGoToTop: handleGoToTop,
-    baseUrl: baseUrl,
     handleGetValueSetting: handleGetValueSetting,
     pusher: pusher,
   };

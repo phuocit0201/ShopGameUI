@@ -1,12 +1,13 @@
-import LayoutSystem from '../components/layout-system';
 import '~/asset/client/css/profile.css';
+import moment from 'moment/moment';
+import LayoutSystem from '../components/layout-system';
 import { DataContext } from '~/contexts/DataContext';
 import { useContext, useEffect, useState } from 'react';
 import { Loading } from '~/components/loading';
-import moment from 'moment/moment';
 function Profile() {
   const title = 'THÔNG TIN TÀI KHOẢN';
   document.title = title;
+
   const dataContext = useContext(DataContext);
   const loadingSystem = dataContext.loading;
   const [loadingPage, setLoadingPage] = useState(true);

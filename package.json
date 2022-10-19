@@ -21,7 +21,6 @@
     "react-flatpickr": "^3.10.13",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "react-time-ago": "^7.2.1",
     "sweetalert2": "^11.4.33",
     "web-vitals": "^2.1.4"
   },
@@ -50,6 +49,7 @@
     ]
   },
   "devDependencies": {
-    "babel-plugin-module-resolver": "^4.1.0"
+    "babel-plugin-module-resolver": "^4.1.0",
+    "dotenv-webpack": "^8.0.1"
   }
 }
