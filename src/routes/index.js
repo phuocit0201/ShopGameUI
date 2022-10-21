@@ -13,6 +13,7 @@ import CategoryGame from '~/pages/client/pages/category-game';
 import AccountDetail from '~/pages/client/pages/account-detail';
 import Lucky from '~/pages/client/pages/lucky';
 import HistoryRotation from '~/pages/client/pages/history-rotaion';
+import About from '~/pages/client/pages/about';
 const publicRoutes = [
   { path: '/', component: Home, layout: Layout },
   { path: '/dang-nhap', component: Login, layout: Layout },
@@ -20,6 +21,7 @@ const publicRoutes = [
   { path: '/danh-muc-game/:slug', component: CategoryGame, layout: Layout },
   { path: '/chi-tiet/:id', component: AccountDetail, layout: Layout },
   { path: '/vong-quay-may-man/:slug', component: Lucky, layout: Layout },
+  { path: '/bai-viet', component: About, layout: Layout },
 ];
 const authRoutesClient = [
   { path: '/admin', component: HomeAdmin, layout: Layout },

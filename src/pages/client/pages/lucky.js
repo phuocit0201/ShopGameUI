@@ -153,62 +153,67 @@ function Lucky() {
     }
   }, [resetRotato]);
 
-  return loadingPage ? (
-    <Loading />
-  ) : (
+  return (
     <BoxContent>
+      {loadingPage && <Loading />}
       {loadingRotation && <LoadingData title="Chờ tí nha" />}
-      <div className="wrapper__lucky">
-        <div className="category-lucky__content--title">
-          <h2 className="text-center">VÒNG QUAY MAY MẮN</h2>
-          <span></span>
-          <h2>Lượt quay {new Intl.NumberFormat().format(infoLuck.price)} VNĐ</h2>
-        </div>
-        <div className="wrapper__lucky--content row">
-          <div className="col-xl-6 col-lg-6">
-            <div className="wrapper__lucky--content-rotato">
-              <div className="lucky__content--rotato-img">
-                <img className="rotato" src={process.env.REACT_APP_URL_PUBLIC + 'lucky/' + infoLuck.img_gift} alt="" />
-                <img onClick={handleRotato} className="btn-rotato" src={btnRotato} alt="" />
-              </div>
-            </div>
+      {loadingPage === false && (
+        <div className="wrapper__lucky">
+          <div className="category-lucky__content--title">
+            <h2 className="text-center">VÒNG QUAY MAY MẮN</h2>
+            <span></span>
+            <h2>Lượt quay {new Intl.NumberFormat().format(infoLuck.price)} VNĐ</h2>
           </div>
-          <div className="col-lg-6 col-lg-6">
-            <div className="wrapper__lucky--content-history">
-              <div className="lucky__content--history-header">
-                <div className="text-end">
-                  <Link to="/lich-su-vong-quay">LỊCH SỬ QUAY</Link>
+          <div className="wrapper__lucky--content row">
+            <div className="col-xl-6 col-lg-6">
+              <div className="wrapper__lucky--content-rotato">
+                <div className="lucky__content--rotato-img">
+                  <img
+                    className="rotato"
+                    src={process.env.REACT_APP_URL_PUBLIC + 'lucky/' + infoLuck.img_gift}
+                    alt=""
+                  />
+                  <img onClick={handleRotato} className="btn-rotato" src={btnRotato} alt="" />
                 </div>
-                <h2>LƯỢT QUAY GẦN ĐÂY</h2>
-                <table className="table table-borderless">
-                  <thead>
-                    <tr>
-                      <th scope="col" className="text-center">
-                        Tài khoản
-                      </th>
-                      <th scope="col" className="text-center">
-                        Phần thưởng
-                      </th>
-                      <th scope="col" className="text-center">
-                        Thời gian
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dataHistotyRecently.map((item) => (
-                      <tr key={item.id}>
-                        <td className="text-center">{item.username}</td>
-                        <td className="text-center">{new Intl.NumberFormat().format(item.coins)} xu</td>
-                        <td className="text-center">{moment(item.created_at).utc('00:07').format('DD-MM-YYYY')}</td>
+              </div>
+            </div>
+            <div className="col-lg-6 col-lg-6">
+              <div className="wrapper__lucky--content-history">
+                <div className="lucky__content--history-header">
+                  <div className="text-end">
+                    <Link to="/lich-su-vong-quay">LỊCH SỬ QUAY</Link>
+                  </div>
+                  <h2>LƯỢT QUAY GẦN ĐÂY</h2>
+                  <table className="table table-borderless">
+                    <thead>
+                      <tr>
+                        <th scope="col" className="text-center">
+                          Tài khoản
+                        </th>
+                        <th scope="col" className="text-center">
+                          Phần thưởng
+                        </th>
+                        <th scope="col" className="text-center">
+                          Thời gian
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {dataHistotyRecently.map((item) => (
+                        <tr key={item.id}>
+                          <td className="text-center">{item.username}</td>
+                          <td className="text-center">{new Intl.NumberFormat().format(item.coins)} xu</td>
+                          <td className="text-center">{moment(item.created_at).utc('00:07').format('DD-MM-YYYY')}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </BoxContent>
   );
 }

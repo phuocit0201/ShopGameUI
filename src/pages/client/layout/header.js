@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '~/asset/fontawesome-free-5.15.3/css/all.min.css';
 import logo from '~/asset/client/images/logo/logo.png';
 import $ from 'jquery';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useContext } from 'react';
 import { DataContext } from '~/contexts/DataContext';
 import { Logout } from '~/services/users';
@@ -62,7 +62,9 @@ function Header() {
       <div className="header-content container">
         <div className="header-moible">
           <div className="logo">
-            <img src={logo} alt="" />
+            <Link to={'/'}>
+              <img src={logo} alt="" />
+            </Link>
           </div>
           <div className="nav__mobile--container d-lg-none d-xl-none">
             <div className="nav__mobile--content">
@@ -78,8 +80,8 @@ function Header() {
               </NavLink>
             </li>
             <li>
-              <NavLink onClick={handleReload} className="left" to="/nap-the-cao">
-                Nạp Tiền
+              <NavLink onClick={handleReload} className="left" to="/bai-viet">
+                Bài Viết
               </NavLink>
             </li>
             <li>

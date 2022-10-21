@@ -54,9 +54,8 @@ function AtmMomo() {
 
   return (
     <LayoutSystem title={title}>
-      {loadingPage ? (
-        <Loading />
-      ) : listAtmWallet.length !== 0 ? (
+      {loadingPage && <Loading />}
+      {loadingPage === false && listAtmWallet.length !== 0 ? (
         <div className="container__content--atm-momo row">
           {listAtmWallet.data.map((item, index) => (
             <div key={index} className="content__box--atm-momo col-xl-12 col-lg-12 col-md-12 col-sm-12">

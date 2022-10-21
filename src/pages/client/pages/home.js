@@ -140,7 +140,7 @@ function Home() {
             </div>
             {luckyList
               ? luckyList.map((item, index) => (
-                  <div key={index} className="category-lucky__content--box col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                  <div key={index} className="category-lucky__content--box col-sm-6 col-md-6 col-lg-3 col-xl-3">
                     <div className="content__box--container">
                       <img src={process.env.REACT_APP_URL_PUBLIC + 'thumb/' + item.img} alt="" />
                       <div className="content__box--info">
@@ -174,7 +174,7 @@ function Home() {
             </div>
             {categoryGameList
               ? categoryGameList.map((item, index) => (
-                  <div key={index} className="category-lucky__content--box col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                  <div key={index} className="category-lucky__content--box col-sm-6 col-md-6 col-lg-3 col-xl-3">
                     <div className="content__box--container">
                       <img src={process.env.REACT_APP_URL_PUBLIC + 'categories/' + item.img} alt="" />
                       <div className="content__box--info">

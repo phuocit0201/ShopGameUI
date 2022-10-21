@@ -46,10 +46,8 @@ function InfoAccountGame() {
             position: 'center',
             icon: 'success',
             title: 'Mua Nick Thành Công',
-            color: '#28a745',
             showConfirmButton: false,
             timer: 1500,
-            background: 'rgba(0, 0, 0, 0.8)',
             backdrop: false,
           });
           setTimeout(() => {
@@ -67,13 +65,12 @@ function InfoAccountGame() {
       });
   };
   const hanledNextSlider = () => {
-    if (indexSlider === infoAccount.imgs.length - 1) {
+    if (parseInt(indexSlider) === infoAccount.imgs.length - 1) {
       setIndexSlider(0);
     } else {
-      setIndexSlider(indexSlider + 1);
+      setIndexSlider(parseInt(indexSlider + 1));
     }
   };
-
   const hanledPriveSlider = () => {
     if (indexSlider === 0) {
       setIndexSlider(parseInt(infoAccount.imgs.length - 1));

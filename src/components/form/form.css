@@ -73,3 +73,13 @@
 .content__box--btn button:hover {
   background: #01a1a1;
 }
+
+/*----------------------------------REPONSEVI----------------------*/
+@media screen and (max-width: 420px) {
+  .form-login,
+  .form-register,
+  .form__container,
+  .form__container--content {
+    width: 100%;
+  }
+}
